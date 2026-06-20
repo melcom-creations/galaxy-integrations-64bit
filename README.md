@@ -6,7 +6,7 @@ This repository is dedicated to preserving, updating, and maintaining community 
 
 Several integrations are currently in active development. Some are already functional and have been distributed to a small group of beta testers for real-world testing and feedback.
 
-At the moment, this repository primarily serves as a project hub and information page. Public releases are being prepared and may become available as soon as testing is completed.
+At the moment, this repository primarily serves as a project hub and information page. Public releases will be published as testing and validation are completed.
 
 The goal is to keep community integrations alive and compatible with current and future versions of GOG Galaxy.
 
