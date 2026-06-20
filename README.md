@@ -11,3 +11,17 @@ At the moment, this repository primarily serves as a project hub and information
 The goal is to keep community integrations alive and compatible with current and future versions of GOG Galaxy.
 
 More information and releases will be published here soon.
+
+## Support & Feedback
+
+This project is developed and maintained by a single person.
+
+As a result, response times may vary, especially during periods when health-related limitations reduce the time available for development and support.
+
+GitHub Issues are intentionally disabled for this repository.
+
+If you would like to report a bug, suggest an improvement, or get in touch, please use the contact form on my website:
+
+https://melcom-creations.github.io/melcom-music/contact.html
+
+Thank you for your patience and support.
