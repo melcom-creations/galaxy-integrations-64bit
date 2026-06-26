@@ -17,8 +17,8 @@ You might wonder why I'm not using 3.14. It’s pretty simple: the current 64-bi
 
 To make my life easier when swapping out libraries—now and in the future—I’ve built two little helper tools for myself:
 
-*   **melcoms_clean-modules v1.4.7**: This one wipes out old dependency libraries from an integration, giving me a fresh, clean start before I rebuild them.
-*   **melcoms_galaxy-aligner-toolkit v3.1.4**: This tool automatically downloads and prepares all the libraries needed for the GOG Galaxy environment. 
+*   **melcom's Clean-Modules (v1.4.7 )**: This one wipes out old dependency libraries from an integration, giving me a fresh, clean start before I rebuild them.
+*   **melcom's Galaxy-Aligner-Toolkit (v3.1.4) - Dependency Maintenance Tool**: This tool automatically downloads and prepares all the libraries needed for the GOG Galaxy environment. 
 
 Together, they save me a ton of manual work. For now, these tools are **private** and just for my own workflow, but I’m thinking about releasing them for everyone somewhere down the road.
 
