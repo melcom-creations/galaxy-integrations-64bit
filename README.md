@@ -1,30 +1,26 @@
-Hier ist der Entwurf für dein Update. Ich habe es direkt ganz oben unter den Titel gepackt, damit jeder sofort sieht, was Sache ist. Der Ton ist locker, so wie du es wolltest, und die Erklärungen zu Python und deinen Tools sind kurz und knackig eingebaut.
-
-***
-
 # galaxy-integrations-64bit
 
 A collection of community integrations for the native 64-bit version of GOG Galaxy 2.1+.
 
 ---
 
-### 📢 Update: 26. Juni 2026
-**Kurzer Statusbericht von mir:**
+### 📢 Update: June 26, 2026
+**A quick status report from my side:**
 
-Mittlerweile kann ich sagen: **6 Plugins funktionieren schon richtig gut!** Aber ich kann die Dinger nicht einfach so „raushauen“. Damit das Ganze Hand und Fuß hat, müssen wir die Sache ordentlich angehen. Das heißt: Bibliotheken austauschen und alles auf den neuesten Stand von **Python 3.13** bringen. 
+I can finally say: **6 plugins are now working really well!** But I can't just "throw them out" yet. To do this right, I need to swap out the libraries and bring everything up to the latest **Python 3.13** standards. 
 
-**Warum nicht Python 3.14?** 
-Ganz einfach: Der neue 64-bit Client von GOG Galaxy arbeitet intern selbst noch auf Basis von **3.13**. Würden wir jetzt auf die 3.14 gehen, gäbe es nur Stress mit inkompatiblen Modulen und Fehlermeldungen. Wir bleiben also genau bei der Version, die der Client vorgibt, damit alles stabil und ohne Abstürze rennt.
+**Why not Python 3.14?** 
+Simply because the new 64-bit GOG Galaxy client itself is based on **3.13**. If we were to use 3.14 now, it would just lead to trouble with incompatible modules and errors. We’re sticking with exactly the version the client uses to keep everything stable and crash-free.
 
-Damit der Austausch der Bibliotheken so simpel wie möglich bleibt (auch für später), habe ich mir zwei kleine Helfer geschrieben:
-*   **melcoms_clean-modules_v1.4.7**: Das Tool ist quasi mein digitaler Besen. Es putzt alte „Modul-Leichen“ aus den Ordnern, damit keine Versionskonflikte entstehen.
-*   **melcoms_galaxy-aligner-toolkit_v3_1_4**: Mein kleines Schweizer Taschenmesser. Es sorgt dafür, dass die Pfade und Abhängigkeiten der Plugins perfekt auf den 64-bit Client „ausgerichtet“ werden.
+To make swapping libraries as easy as possible (now and in the future), I’ve written two small tools:
+*   **melcoms_clean-modules_v1.4.7**: This is basically my digital broom. It sweeps old "module corpses" out of the folders so we don't get version conflicts.
+*   **melcoms_galaxy-aligner-toolkit_v3_1_4**: My little Swiss Army knife. It ensures that plugin paths and dependencies are perfectly "aligned" for the 64-bit client.
 
-**Wichtig:** Diese beiden Tools habe ich aktuell erst mal nur für mich privat geschrieben, um den Workflow zu beschleunigen. Ich überlege aber, sie euch eines Tages ebenfalls zur Verfügung zu stellen.
+**Just so you know:** I wrote these two tools for my own private use to speed things up. I might think about making them available to you guys one day, though.
 
-Alles in allem brauche ich noch ein paar Tage Geduld von euch. Schaut einfach hin und wieder hier vorbei, ob es ein neues Release gibt.
+All in all, I still need a few more days. Just check back here (https://github.com/melcom-creations/galaxy-integrations-64bit) every now and then to see if I have an update for you.
 
-Schönes Wochenende!
+Have a great weekend!
 **melcom**
 
 ---
