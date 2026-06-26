@@ -1,24 +1,32 @@
+Hier ist das komplette README mit dem integrierten Update. Ich habe den Ton locker gehalten, so wie du es wolltest, und die Fakten zu deinen Tools exakt übernommen.
+
+***
+
 # galaxy-integrations-64bit
 
 A collection of community integrations for the native 64-bit version of GOG Galaxy 2.1+.
 
----
+This project is focused on preserving, modernizing, and maintaining community integrations that were originally developed for older versions of GOG Galaxy and are no longer compatible with the current 64-bit client.
 
-### 📢 Update: June 26, 2026
-**A quick status report from my side:**
+The goal is simple: keep community integrations alive and working on modern systems while ensuring compatibility with current and future releases of GOG Galaxy.
 
-I can finally say: **6 plugins are now working really well!** But I can't just "throw them out" yet. To do this right, I need to swap out the libraries and bring everything up to the latest **Python 3.13** standards. 
+## 📢 Project Update - June 26, 2026
 
-**Why not Python 3.14?** 
-Simply because the new 64-bit GOG Galaxy client itself is based on **3.13**. If we were to use 3.14 now, it would just lead to trouble with incompatible modules and errors. We’re sticking with exactly the version the client uses to keep everything stable and crash-free.
+Hey everyone, just a quick heads-up on how things are going!
 
-To make swapping libraries as easy as possible (now and in the future), I’ve written two small tools:
-*   **melcoms_clean-modules_v1.4.7**: This is basically my digital broom. It sweeps old "module corpses" out of the folders so we don't get version conflicts.
-*   **melcoms_galaxy-aligner-toolkit_v3_1_4**: My little Swiss Army knife. It ensures that plugin paths and dependencies are perfectly "aligned" for the 64-bit client.
+I’m happy to say that **six integrations are already up and running** really well. However, I’m not just going to "throw them out" there. I want to do this right, which means replacing old libraries and making sure everything is as clean and stable as possible before you guys get your hands on them.
 
-**Just so you know:** I wrote these two tools for my own private use to speed things up. I might think about making them available to you guys one day, though.
+**Why am I sticking with Python 3.13?**
+You might wonder why I'm not using 3.14. It’s pretty simple: the current 64-bit GOG Galaxy client itself is based on **Python 3.13**. As long as GOG doesn't move to a newer version, it makes the most sense for me to stay on 3.13 too. It avoids unnecessary bugs and keeps everything perfectly compatible.
 
-All in all, I still need a few more days. Just check back here (https://github.com/melcom-creations/galaxy-integrations-64bit) every now and then to see if I have an update for you.
+To make my life easier when swapping out libraries—now and in the future—I’ve built two little helper tools for myself:
+
+*   **melcoms_clean-modules v1.4.7**: This one wipes out old dependency libraries from an integration, giving me a fresh, clean start before I rebuild them.
+*   **melcoms_galaxy-aligner-toolkit v3.1.4**: This tool automatically downloads and prepares all the libraries needed for the GOG Galaxy environment. 
+
+Together, they save me a ton of manual work. For now, these tools are **private** and just for my own workflow, but I’m thinking about releasing them for everyone somewhere down the road.
+
+I still need a few more days to wrap things up. Feel free to check back here every now and then to see if the first releases are live.
 
 Have a great weekend!
 **melcom**
@@ -26,8 +34,6 @@ Have a great weekend!
 ---
 
 ## Current Status
-
-This project is focused on preserving, modernizing, and maintaining community integrations that were originally developed for older versions of GOG Galaxy and are no longer compatible with the current 64-bit client.
 
 Several integrations are already functional and are currently being tested by a small group of beta testers.
 
@@ -59,7 +65,7 @@ Development priorities may change depending on complexity, available time, and t
 
 This repository currently serves as both a project hub and development tracker.
 
-Public releases will be published as testing and validation are completed. 
+Public releases will be published as testing and validation are completed.
 
 Several releases are expected to become available within the coming days, provided no major issues are discovered during the final testing phase.
 
