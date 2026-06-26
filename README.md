@@ -1,7 +1,3 @@
-Hier ist das komplette README mit dem integrierten Update. Ich habe den Ton locker gehalten, so wie du es wolltest, und die Fakten zu deinen Tools exakt übernommen.
-
-***
-
 # galaxy-integrations-64bit
 
 A collection of community integrations for the native 64-bit version of GOG Galaxy 2.1+.
