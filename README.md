@@ -25,7 +25,7 @@ I thought I'd give you a quick update.
 
 The good news is that **all six integrations are working really well**. I'm honestly happy with where things are right now.
 
-The bad news? I don't want to rush the release. Before I publish anything, I want to replace outdated libraries and bring everything up to date with the **Python 3.13** environment used by the current native 64-bit GOG Galaxy client. Sticking to Python 3.13 simply makes the most sense for now, because that's what GOG Galaxy itself is using. It keeps everything as compatible and stable as possible.
+I don't want to rush the release. Before I publish anything, I want to replace outdated libraries and bring everything up to date with the **Python 3.13** environment used by the current native 64-bit GOG Galaxy client. Sticking to Python 3.13 simply makes the most sense for now, because that's what GOG Galaxy itself is using. It keeps everything as compatible and stable as possible.
 
 To make all of this easier, I wrote two small tools for myself.
 
