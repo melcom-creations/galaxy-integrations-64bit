@@ -1,12 +1,37 @@
+Hier ist der Entwurf für dein Update. Ich habe es direkt ganz oben unter den Titel gepackt, damit jeder sofort sieht, was Sache ist. Der Ton ist locker, so wie du es wolltest, und die Erklärungen zu Python und deinen Tools sind kurz und knackig eingebaut.
+
+***
+
 # galaxy-integrations-64bit
 
 A collection of community integrations for the native 64-bit version of GOG Galaxy 2.1+.
 
-This project is focused on preserving, modernizing, and maintaining community integrations that were originally developed for older versions of GOG Galaxy and are no longer compatible with the current 64-bit client.
+---
 
-The goal is simple: keep community integrations alive and working on modern systems while ensuring compatibility with current and future releases of GOG Galaxy.
+### 📢 Update: 26. Juni 2026
+**Kurzer Statusbericht von mir:**
+
+Mittlerweile kann ich sagen: **6 Plugins funktionieren schon richtig gut!** Aber ich kann die Dinger nicht einfach so „raushauen“. Damit das Ganze Hand und Fuß hat, müssen wir die Sache ordentlich angehen. Das heißt: Bibliotheken austauschen und alles auf den neuesten Stand von **Python 3.13** bringen. 
+
+**Warum nicht Python 3.14?** 
+Ganz einfach: Der neue 64-bit Client von GOG Galaxy arbeitet intern selbst noch auf Basis von **3.13**. Würden wir jetzt auf die 3.14 gehen, gäbe es nur Stress mit inkompatiblen Modulen und Fehlermeldungen. Wir bleiben also genau bei der Version, die der Client vorgibt, damit alles stabil und ohne Abstürze rennt.
+
+Damit der Austausch der Bibliotheken so simpel wie möglich bleibt (auch für später), habe ich mir zwei kleine Helfer geschrieben:
+*   **melcoms_clean-modules_v1.4.7**: Das Tool ist quasi mein digitaler Besen. Es putzt alte „Modul-Leichen“ aus den Ordnern, damit keine Versionskonflikte entstehen.
+*   **melcoms_galaxy-aligner-toolkit_v3_1_4**: Mein kleines Schweizer Taschenmesser. Es sorgt dafür, dass die Pfade und Abhängigkeiten der Plugins perfekt auf den 64-bit Client „ausgerichtet“ werden.
+
+**Wichtig:** Diese beiden Tools habe ich aktuell erst mal nur für mich privat geschrieben, um den Workflow zu beschleunigen. Ich überlege aber, sie euch eines Tages ebenfalls zur Verfügung zu stellen.
+
+Alles in allem brauche ich noch ein paar Tage Geduld von euch. Schaut einfach hin und wieder hier vorbei, ob es ein neues Release gibt.
+
+Schönes Wochenende!
+**melcom**
+
+---
 
 ## Current Status
+
+This project is focused on preserving, modernizing, and maintaining community integrations that were originally developed for older versions of GOG Galaxy and are no longer compatible with the current 64-bit client.
 
 Several integrations are already functional and are currently being tested by a small group of beta testers.
 
@@ -18,28 +43,6 @@ The following integrations are presently in active beta testing:
 * Steam
 
 These integrations have already received significant compatibility updates and are being validated through real-world testing before public release.
-
-## Project Update - June 26, 2026
-
-I thought I'd give you a quick update.
-
-The good news is that **all six integrations are working really well**. I'm honestly happy with where things are right now.
-
-I don't want to rush the release. Before I publish anything, I want to replace outdated libraries and bring everything up to date with the **Python 3.13** environment used by the current native 64-bit GOG Galaxy client. Sticking to Python 3.13 simply makes the most sense for now, because that's what GOG Galaxy itself is using. It keeps everything as compatible and stable as possible.
-
-To make all of this easier, I wrote two small tools for myself.
-
-**melcoms_clean-modules v1.4.7** removes old libraries from an integration, while **melcoms_galaxy-aligner-toolkit v3.1.4** downloads fresh ones and prepares everything for the current Galaxy environment. They're private tools for now, but maybe I'll release them one day if there's enough interest.
-
-So... I still need a few more days.
-
-Feel free to check back every now and then:
-https://github.com/melcom-creations/galaxy-integrations-64bit
-
-Have a great weekend!
-
-melcom
-
 
 ## Planned Integrations
 
@@ -60,7 +63,7 @@ Development priorities may change depending on complexity, available time, and t
 
 This repository currently serves as both a project hub and development tracker.
 
-Public releases will be published as testing and validation are completed.
+Public releases will be published as testing and validation are completed. 
 
 Several releases are expected to become available within the coming days, provided no major issues are discovered during the final testing phase.
 
