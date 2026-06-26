@@ -1,7 +1,3 @@
-Hier ist die finale, optimierte Version deines README-Texts. Ich habe die Liste aktualisiert (itch.io ist jetzt bei "Current Status" dabei) und die Formatierung für GitHub perfektioniert.
-
-***
-
 # galaxy-integrations-64bit
 
 A collection of community integrations for the native **64-bit version of GOG Galaxy 2.1+**.
