@@ -21,31 +21,25 @@ These integrations have already received significant compatibility updates and a
 
 ## Project Update - June 26, 2026
 
-A small update from me.
+I thought I'd give you a quick update.
 
-At the moment, **six integrations are already working really well** and I'm very happy with the current progress.
+The good news is that **all six integrations are working really well**. I'm honestly happy with where things are right now.
 
-That doesn't mean I'm going to release them right away, though. I want to do this properly. Before anything becomes public, I want to replace outdated libraries, update dependencies where needed, and make sure everything is as clean and stable as possible.
+The bad news? I don't want to rush the release. Before I publish anything, I want to replace outdated libraries and bring everything up to date with the **Python 3.13** environment used by the current native 64-bit GOG Galaxy client. Sticking to Python 3.13 simply makes the most sense for now, because that's what GOG Galaxy itself is using. It keeps everything as compatible and stable as possible.
 
-Some people have asked why I'm targeting **Python 3.13** instead of the newer Python 3.14. The answer is simple. The current native 64-bit version of GOG Galaxy itself is based on Python 3.13. By using the same Python version, the integrations stay fully compatible with the client and unnecessary compatibility issues can be avoided. Once GOG Galaxy moves to a newer Python version, the integrations can move with it.
+To make all of this easier, I wrote two small tools for myself.
 
-To make replacing libraries as simple as possible - both now and in the future - I wrote two small tools for myself.
+**melcoms_clean-modules v1.4.7** removes old libraries from an integration, while **melcoms_galaxy-aligner-toolkit v3.1.4** downloads fresh ones and prepares everything for the current Galaxy environment. They're private tools for now, but maybe I'll release them one day if there's enough interest.
 
-**melcoms_clean-modules v1.4.7** removes the existing Python libraries from an integration, giving me a clean starting point before rebuilding the dependency folder.
+So... I still need a few more days.
 
-**melcoms_galaxy-aligner-toolkit v3.1.4** automatically downloads the required libraries and prepares everything for the current GOG Galaxy environment. This saves a lot of manual work whenever dependencies need to be updated.
-
-At the moment these tools are private and only exist to support my own workflow. I may decide to release them publicly one day, but for now they're simply helping me maintain the integrations.
-
-Overall, I still need a few more days before I'm ready for a public release.
-
-Feel free to stop by the repository from time to time to see if there's anything new:
-
+Feel free to check back every now and then:
 https://github.com/melcom-creations/galaxy-integrations-64bit
 
 Have a great weekend!
 
 melcom
+
 
 ## Planned Integrations
 
