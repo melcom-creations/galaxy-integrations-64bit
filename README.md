@@ -68,6 +68,6 @@ This project is maintained by a single individual. Response times may vary, espe
 **GitHub Issues are intentionally disabled.**  
 If you would like to report a bug or suggest an improvement, please use the contact form on my website:
 
-👉 [**Contact melcom-creations**](https://melcom-creations.github.io/melcom-music/contact.html)
+👉 [**Contact melcom**](https://melcom-creations.github.io/melcom-music/contact.html)
 
 Thank you for your patience and support!
