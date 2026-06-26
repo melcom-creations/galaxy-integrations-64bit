@@ -4,13 +4,11 @@ A collection of community integrations for the native 64-bit version of GOG Gala
 
 This project is focused on preserving, modernizing, and maintaining community integrations that were originally developed for older versions of GOG Galaxy and are no longer compatible with the current 64-bit client.
 
-The goal is simple: keep community integrations alive and working on modern systems while making sure they stay compatible with current and future releases of GOG Galaxy.
+The goal is simple: keep community integrations alive and working on modern systems while ensuring compatibility with current and future releases of GOG Galaxy.
 
 ## Current Status
 
-Several integrations are already working well and are being tested right now.
-
-As of 2026-06-26, six plugins are already running really well in practice. I am still not just throwing them out there, though, because I want to do this properly. That means swapping out libraries where needed, checking everything carefully, and bringing the whole stack up to date with Python 3.13, which matches the basis of the new 64-bit GOG Galaxy client. That makes a lot more sense here than jumping to Python 3.14 too early, because I want to stay aligned with the client version that the integrations are actually built around and avoid unnecessary compatibility problems.
+Several integrations are already functional and are currently being tested by a small group of beta testers.
 
 The following integrations are presently in active beta testing:
 
@@ -18,9 +16,36 @@ The following integrations are presently in active beta testing:
 * Humble Bundle
 * Battle.net
 * Steam
-* plus two more integrations that are already in the same update cycle and working well in my tests
 
-These integrations have already received a good amount of compatibility work and are being checked in real-world use before I release anything publicly.
+These integrations have already received significant compatibility updates and are being validated through real-world testing before public release.
+
+## Project Update - June 26, 2026
+
+A small update from me.
+
+At the moment, **six integrations are already working really well** and I'm very happy with the current progress.
+
+That doesn't mean I'm going to release them right away, though. I want to do this properly. Before anything becomes public, I want to replace outdated libraries, update dependencies where needed, and make sure everything is as clean and stable as possible.
+
+Some people have asked why I'm targeting **Python 3.13** instead of the newer Python 3.14. The answer is simple. The current native 64-bit version of GOG Galaxy itself is based on Python 3.13. By using the same Python version, the integrations stay fully compatible with the client and unnecessary compatibility issues can be avoided. Once GOG Galaxy moves to a newer Python version, the integrations can move with it.
+
+To make replacing libraries as simple as possible - both now and in the future - I wrote two small tools for myself.
+
+**melcoms_clean-modules v1.4.7** removes the existing Python libraries from an integration, giving me a clean starting point before rebuilding the dependency folder.
+
+**melcoms_galaxy-aligner-toolkit v3.1.4** automatically downloads the required libraries and prepares everything for the current GOG Galaxy environment. This saves a lot of manual work whenever dependencies need to be updated.
+
+At the moment these tools are private and only exist to support my own workflow. I may decide to release them publicly one day, but for now they're simply helping me maintain the integrations.
+
+Overall, I still need a few more days before I'm ready for a public release.
+
+Feel free to stop by the repository from time to time to see if there's anything new:
+
+https://github.com/melcom-creations/galaxy-integrations-64bit
+
+Have a great weekend!
+
+melcom
 
 ## Planned Integrations
 
@@ -35,7 +60,7 @@ If time permits, additional integrations may also receive updates in the future,
 * PlayStation
 * Additional community integrations that have not yet been publicly announced
 
-Development priorities may still change depending on complexity, available time, and testing results.
+Development priorities may change depending on complexity, available time, and testing results.
 
 ## Releases
 
@@ -43,13 +68,13 @@ This repository currently serves as both a project hub and development tracker.
 
 Public releases will be published as testing and validation are completed.
 
-A few releases should be ready in the next days, as long as no major issues show up during the final testing phase.
+Several releases are expected to become available within the coming days, provided no major issues are discovered during the final testing phase.
 
 ## Support & Feedback
 
-This project is developed and maintained by a single person.
+This project is developed and maintained by a single individual.
 
-Because of that, response times can vary, especially when health or time limitations slow things down a bit.
+As a result, response times may vary, especially during periods when health-related limitations reduce the time available for development and support.
 
 GitHub Issues are intentionally disabled for this repository.
 
@@ -57,19 +82,4 @@ If you would like to report a bug, suggest an improvement, or get in touch, plea
 
 https://melcom-creations.github.io/melcom-music/contact.html
 
-Thanks for your patience, feedback, and support.
-
-## About the tools
-
-To make the library exchange as easy as possible, even for future updates, I wrote two small private tools for myself: melcoms_clean-modules_v1.4.7 and melcoms_galaxy-aligner-toolkit_v3_1_4.
-
-Both tools help with cleaning up and replacing modules in a controlled way, so the integrations can be kept in shape without doing everything by hand every time. Right now they are private tools that I made for my own workflow, but I am thinking about making them available to everyone at some point in the future.
-
----
-
-Sometimes the best way is simply to take a little more time and do it properly.
-Please check back here from time to time:
-https://github.com/melcom-creations/galaxy-integrations-64bit
-
-Have a nice weekend
-melcom
+Thank you for your patience, feedback, and support.
