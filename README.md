@@ -61,6 +61,15 @@ This repository serves as both a project hub and development tracker.
 *   **Public releases** will be published as testing and validation are completed.
 *   Expect several releases within the coming days, provided no major issues are discovered during the final testing phase.
 
+## ❤️ Special Thanks
+
+I want to take a moment to thank the people who kept me going during this intense development phase:
+
+*   A huge shout-out to my friend [**Hustlefan**](https://www.gog.com/u/Hustlefan). You weren't just a mental rock for me over the last few days, but you also gave me the strength to push through when I was close to giving up. He's also been beta testing these tools and—I think—he’s pretty happy with the results! Cheers for the support, man.
+*   A massive thank you to my girlfriend, **Florence H.** ([**fl0H0815**](https://www.gog.com/u/Florence_Heart)). While she was living the good life at her parents' place—enjoying the AC and a giant pool—she kept my spirits high with photos of her, her friends, and her family. She reminded me how beautiful life can be outside of a code editor... though I definitely feel like I missed out on that pool! 😂
+
+Thank you both for having my back!
+
 ## 🤝 Support & Feedback
 
 This project is maintained by a single individual. Response times may vary, especially during periods when health-related limitations reduce available development time.
@@ -68,6 +77,6 @@ This project is maintained by a single individual. Response times may vary, espe
 **GitHub Issues are intentionally disabled.**  
 If you would like to report a bug or suggest an improvement, please use the contact form on my website:
 
-👉 [**Contact melcom**](https://melcom-creations.github.io/melcom-music/contact.html)
+👉 [**Contact melcom-creations**](https://melcom-creations.github.io/melcom-music/contact.html)
 
 Thank you for your patience and support!
