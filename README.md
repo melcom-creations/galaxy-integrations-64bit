@@ -75,9 +75,9 @@ This repository serves as both a project hub and development tracker.
 
 I want to take a moment to thank the people who kept me going during this intense development phase:
 
-* A huge shout-out to my friend **Hustlefan**. You weren't just a mental rock for me over the last few days, but you also gave me the strength to push through when I was close to giving up. He's also been beta testing these tools, and I think he's pretty happy with the results! Cheers for the support, man.
+* A huge shout-out to my friend [**Hustlefan**](https://www.gog.com/u/Hustlefan). You weren't just a mental rock for me over the last few days, but you also gave me the strength to push through when I was close to giving up. He's also been beta testing these tools, and I think he's pretty happy with the results! Cheers for the support, man.
 
-* A massive thank you to my girlfriend, **Florence H. (fl0H0815)**. While she was enjoying the good life at her parents' place, complete with AC and a giant pool, she kept my spirits high with photos of her, her friends, and her family. She reminded me how beautiful life can be outside of a code editor... though I definitely feel like I missed out on that pool! 😂
+* A massive thank you to my girlfriend, **Florence H.** ([**fl0H0815**](https://www.gog.com/u/Florence_Heart)). While she was enjoying the good life at her parents' place, complete with AC and a giant pool, she kept my spirits high with photos of her, her friends, and her family. She reminded me how beautiful life can be outside of a code editor... though I definitely feel like I missed out on that pool! 😂
 
 Thank you both for having my back!
 
