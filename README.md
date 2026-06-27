@@ -1,5 +1,7 @@
 # galaxy-integrations-64bit
 
+> **Notice:** This page is currently a preview to share ongoing progress and inform you about what is coming soon. Official releases will be linked here as they become available.
+
 A collection of community integrations modernized for the native **64-bit version of GOG Galaxy 2.1+**.
 
 The goal is to keep community integrations alive, compatible, and ready for the 64-bit client by updating dependencies and replacing outdated libraries.
@@ -73,4 +75,4 @@ This project is maintained by a single developer. Response times may vary.
 
 **GitHub Issues are disabled.** 
 To report bugs or provide feedback, please use the contact form:
-👉 [melcom Contact Form](https://melcom-creations.github.io/melcom-music/contact.html)
+👉 [melcom-creations Contact Form](https://melcom-creations.github.io/melcom-music/contact.html)
