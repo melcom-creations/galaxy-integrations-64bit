@@ -73,4 +73,4 @@ This project is maintained by a single developer. Response times may vary.
 
 **GitHub Issues are disabled.** 
 To report bugs or provide feedback, please use the contact form:
-👉 [melcom-creations Contact Form](https://melcom-creations.github.io/melcom-music/contact.html)
+👉 [melcom Contact Form](https://melcom-creations.github.io/melcom-music/contact.html)
