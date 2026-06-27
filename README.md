@@ -12,16 +12,21 @@ The goal is to keep community integrations alive, compatible, and ready for the 
 
 The following integrations have been updated and validated for the 64-bit client. Download links will be added here as they are released.
 
-| Integration | Status | Download |
-| :--- | :--- | :--- |
-| **Amazon Games** | ✅ Beta | *Coming soon* |
-| **Battle.net** | ✅ Beta | *Coming soon* |
-| **Humble Bundle** | ✅ Beta | *Coming soon* |
-| **itch.io** | ✅ Beta | *Coming soon* |
-| **Steam** | ✅ Beta | *Coming soon* |
-| **IndieGala** | ⏳ In Progress (Qt6 issue) | *Planned* |
-| **Rockstar Games** | 💤 Planned | *Planned* |
-| **PlayStation** | 💤 Planned | *Planned* |
+| Integration | Status | Achievements | Game Time | Download |
+| :--- | :--- | :---: | :---: | :--- |
+| **Amazon Games** | ✅ Beta | ❌ | ✅ | *Coming soon* |
+| **Battle.net** | ✅ Beta | ❌ | ✅ | *Coming soon* |
+| **Humble Bundle** | ✅ Beta | ❌ | ✅ | *Coming soon* |
+| **itch.io** | ✅ Beta | ❌ | ❌ | *Coming soon* |
+| **Steam** | ✅ Beta | ✅ | ✅ | *Coming soon* |
+| **IndieGala** | ⏳ In Progress (Qt6 issue) | ❌ | ⏳ *(Planned)* | *Planned* |
+| **Rockstar Games** | 💤 Planned | ⏳ *(Planned)* | ⏳ *(Planned)* | *Planned* |
+| **PlayStation** | 💤 Planned | ❌ | ✅ | *Planned* |
+
+**Legend:**  
+* ✅ = Implemented / Supported  
+* ❌ = Unsupported / Not implemented  
+* ⏳ = Planned  
 
 *(+ 1 more integration currently undergoing final internal testing)*
 
