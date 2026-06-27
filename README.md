@@ -19,9 +19,9 @@ The following integrations have been updated and validated for the 64-bit client
 | **Humble Bundle** | ✅ Beta | ❌ | ✅ | *Coming soon* |
 | **itch.io** | ✅ Beta | ❌ | ✅ | *Coming soon* |
 | **Steam** | ✅ Beta | ✅ | ✅ | *Coming soon* |
-| **IndieGala** | ⏳ In Progress (Qt6 issue) | ❌ | ⏳ | *Planned* |
-| **Rockstar Games** | 💤 Planned | ✅ | ✅ | *Planned* |
-| **PlayStation** | 💤 Planned | ❌ | ✅ | *Planned* |
+| **IndieGala** | ⏳ In Progress (Qt6 issue) | ❌ | ⏳ | ⏳ |
+| **Rockstar Games** | 💤 maybe | ✅ | ✅ | ⏳ |
+| **PlayStation** | 💤 maybe | ❌ | ✅ | ⏳ |
 
 **Legend:**  
 * ✅ = Implemented / Supported  
