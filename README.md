@@ -17,7 +17,7 @@ The following integrations have been updated and validated for the 64-bit client
 | **Amazon Games** | ✅ Beta | ❌ | ✅ | *Coming soon* |
 | **Battle.net** | ✅ Beta | ❌ | ✅ | *Coming soon* |
 | **Humble Bundle** | ✅ Beta | ❌ | ✅ | *Coming soon* |
-| **itch.io** | ✅ Beta | ❌ | ❌ | *Coming soon* |
+| **itch.io** | ✅ Beta | ❌ | ✅ | *Coming soon* |
 | **Steam** | ✅ Beta | ✅ | ✅ | *Coming soon* |
 | **IndieGala** | ⏳ In Progress (Qt6 issue) | ❌ | ⏳ *(Planned)* | *Planned* |
 | **Rockstar Games** | 💤 Planned | ⏳ *(Planned)* | ⏳ *(Planned)* | *Planned* |
