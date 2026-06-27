@@ -20,7 +20,7 @@ The following integrations have been updated and validated for the 64-bit client
 | **itch.io** | ✅ Beta | ❌ | ✅ | *Coming soon* |
 | **Steam** | ✅ Beta | ✅ | ✅ | *Coming soon* |
 | **IndieGala** | ⏳ In Progress (Qt6 issue) | ❌ | ⏳ | *Planned* |
-| **Rockstar Games** | 💤 Planned | ⏳ | ⏳ | *Planned* |
+| **Rockstar Games** | 💤 Planned | ✅ | ✅ | *Planned* |
 | **PlayStation** | 💤 Planned | ❌ | ✅ | *Planned* |
 
 **Legend:**  
