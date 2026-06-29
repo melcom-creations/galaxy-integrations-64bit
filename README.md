@@ -14,11 +14,11 @@ The following integrations have been updated and validated for the 64-bit client
 
 | Integration | Status | Achievements | Game Time | Download |
 | :--- | :--- | :---: | :---: | :--- |
-| **Amazon Games** | ✅ Beta | ❌ | ✅ | *Coming soon* |
-| **Battle.net** | ✅ Beta | ❌ | ✅ | *Coming soon* |
-| **Humble Bundle** | ✅ Beta | ❌ | ✅ | *Coming soon* |
-| **itch.io** | ✅ Beta | ❌ | ✅ | *Coming soon* |
-| **Steam** | ✅ Beta | ✅ | ✅ | *Coming soon* |
+| **Amazon Games** | ✅ Beta | ❌ | ✅ | [Download](https://github.com/melcom-creations/galaxy-integration-amazon/releases/latest) |
+| **Battle.net** | ✅ Beta | ❌ | ✅ | [Download](https://github.com/melcom-creations/galaxy-integration-battlenet/releases/latest) |
+| **Humble Bundle** | ✅ Beta | ❌ | ✅ | [Download](https://github.com/melcom-creations/galaxy-integration-humble/releases/latest) |
+| **itch.io** | ✅ Beta | ❌ | ✅ | [Download](https://github.com/melcom-creations/galaxy-integration-itch/releases/latest) |
+| **Steam** | ✅ Beta | ✅ | ✅ | [Download](https://github.com/melcom-creations/galaxy-integration-steam/releases/latest) |
 | **IndieGala** | ⏳ In Progress (Qt6 issue) | ❌ | ⏳ | ⏳ |
 | **Rockstar Games** | 💤 maybe | ✅ | ✅ | ⏳ |
 | **PlayStation** | 💤 maybe | ❌ | ✅ | ⏳ |
