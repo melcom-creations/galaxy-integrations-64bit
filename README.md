@@ -14,11 +14,11 @@ The following integrations have been updated and validated for the 64-bit client
 
 | Integration | Status | Achievements | Game Time | Download |
 | :--- | :--- | :---: | :---: | :--- |
-| **Amazon Games** | ✅ Beta | ❌ | ✅ | [Download](https://github.com/melcom-creations/galaxy-integration-amazon/releases/latest) |
-| **Battle.net** | ✅ Beta | ❌ | ✅ | [Download](https://github.com/melcom-creations/galaxy-integration-battlenet/releases/latest) |
-| **Humble Bundle** | ✅ Beta | ❌ | ✅ | [Download](https://github.com/melcom-creations/galaxy-integration-humble/releases/latest) |
-| **itch.io** | ✅ Beta | ❌ | ✅ | [Download](https://github.com/melcom-creations/galaxy-integration-itch/releases/latest) |
-| **Steam** | ✅ Beta | ✅ | ✅ | [Download](https://github.com/melcom-creations/galaxy-integration-steam/releases/latest) |
+| **Amazon Games** | ✅ Beta | ❌ | ✅ | [Download](https://github.com/melcom-creations/galaxy-integration-amazon) |
+| **Battle.net** | ✅ Beta | ❌ | ✅ | [Download](https://github.com/melcom-creations/galaxy-integration-battlenet) |
+| **Humble Bundle** | ✅ Beta | ❌ | ✅ | [Download](https://github.com/melcom-creations/galaxy-integration-humble) |
+| **itch.io** | ✅ Beta | ❌ | ✅ | [Download](https://github.com/melcom-creations/galaxy-integration-itch) |
+| **Steam** | ✅ Beta | ✅ | ✅ | [Download](https://github.com/melcom-creations/galaxy-integration-steam) |
 | **IndieGala** | ⏳ In Progress (Qt6 issue) | ❌ | ⏳ | ⏳ |
 | **Rockstar Games** | 💤 maybe | ✅ | ✅ | ⏳ |
 | **PlayStation** | 💤 maybe | ❌ | ✅ | ⏳ |
