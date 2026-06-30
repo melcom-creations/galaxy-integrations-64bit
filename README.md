@@ -19,6 +19,7 @@ The following integrations have been updated and validated for the 64-bit client
 | **Humble Bundle** | ✅ Beta | ❌ | ✅ | [Download](https://github.com/melcom-creations/galaxy-integration-humble) |
 | **itch.io** | ✅ Beta | ❌ | ✅ | [Download](https://github.com/melcom-creations/galaxy-integration-itch) |
 | **Steam** | ✅ Beta | ✅ | ✅ | [Download](https://github.com/melcom-creations/galaxy-integration-steam) |
+| **Ubisoft Connect** | ✅ Beta | ❌ | ✅ | [Download](https://github.com/melcom-creations/galaxy-integration-uplay) |
 | **IndieGala** | ⏳ In Progress (Qt6 issue) | ❌ | ⏳ | ⏳ |
 | **Rockstar Games** | 💤 maybe | ✅ | ✅ | ⏳ |
 | **PlayStation** | 💤 maybe | ❌ | ✅ | ⏳ |
