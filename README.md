@@ -29,7 +29,7 @@ The following integrations have been updated and validated for the 64-bit client
 * ❌ = Unsupported / Not implemented  
 * ⏳ = Planned  
 
-*(+ 2 more integration currently undergoing final internal testing)*
+*(+ 1 more integration currently undergoing final internal testing)*
 
 ---
 
