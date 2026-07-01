@@ -10,7 +10,7 @@ The goal is to keep community integrations alive, compatible, and ready for the 
 
 ## 🚀 Supported Integrations & Status
 
-The following integrations have been updated and validated for the 64-bit client. Download links will be added here as they are released.
+The following integrations have been updated and validated for the 64-bit client.
 
 | Integration | Maintainer | Status | Achievements | Game Time | Download |
 | :--- | :--- | :---: | :---: | :---: | :--- |
