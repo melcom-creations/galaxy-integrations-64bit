@@ -1,4 +1,4 @@
-# galaxy-integrations-64bit
+# Community Integrations for GOG Galaxy 2.1+ (64-bit)
 
 > **Notice:** This page is currently a preview to share ongoing progress and inform you about what is coming soon. Official releases will be linked here as they become available.
 
