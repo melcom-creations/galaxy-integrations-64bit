@@ -15,7 +15,6 @@ The following integrations have been updated and validated for the 64-bit client
 | Integration | Maintainer | Status | Achievements | Game Time | Download |
 | :--- | :--- | :---: | :---: | :---: | :--- |
 | **Amazon Games** | **melcom** | ✅ Released | ❌ | ✅ | [Download](https://github.com/melcom-creations/galaxy-integration-amazon) |
-| **Amazon Games (Legacy)** | **pippo-san** | ✅ Released | ❌ | ✅ | [Download](https://github.com/pippo-san/galaxy-integration-legacy-games) |
 | **Battle.net** | **melcom** | ✅ Released | ❌ | ✅ | [Download](https://github.com/melcom-creations/galaxy-integration-battlenet) |
 | **Humble Bundle** | **melcom** | ✅ Released | ❌ | ✅ | [Download](https://github.com/melcom-creations/galaxy-integration-humble) |
 | **itch.io** | **melcom** | ✅ Released | ❌ | ✅ | [Download](https://github.com/melcom-creations/galaxy-integration-itch) |
@@ -25,6 +24,7 @@ The following integrations have been updated and validated for the 64-bit client
 | **IndieGala** | **melcom** | ⏳ In Progress (Qt6 issue) | ❌ | ⏳ | ⏳ |
 | **Rockstar Games** | **melcom** | 💤 Maybe | ✅ | ✅ | ⏳ |
 | **PlayStation** | **melcom** | 💤 Maybe | ❌ | ✅ | ⏳ |
+| **Legacy Games** | **pippo-san** | ✅ Released | ❌ | ✅ | [Download](https://github.com/pippo-san/galaxy-integration-legacy-games) |
 
 **Legend:**  
 * ✅ = Implemented / Supported  
