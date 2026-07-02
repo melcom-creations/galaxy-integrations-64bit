@@ -56,7 +56,7 @@ The native 64-bit version of **GOG Galaxy** is built on Python 3.13. To avoid co
 
 To streamline updating and maintaining dependencies, I developed a unified PowerShell utility:
 
-* **melcom's Galaxy Plugin Scout (v1.1.8)**
+* **melcom's Galaxy Plugin Scout (v1.1.20)**
 
   An analyzer, cleaner, and dependency updater designed for GOG Galaxy 2.x plugins. It scans the plugin root, resolves import dependency trees (filtering standard libraries and internal namespaces), automatically backs up and purges unused modules, and uses `pip` to safely fetch and install updated Python 3.13 AMD64 dependencies.
 
