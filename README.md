@@ -62,20 +62,22 @@ Each entry in the table above is one of my plugins, hosted in its own repository
 
 ---
 
-## 🧰 Keeping Your Plugins Up to Date
+## 🧰 Keeping the Bundled Libraries Up to Date
 
-Every integration in this repository ships with a small `/tools/` folder. It is easy to miss, but worth knowing about if you plan to keep a plugin installed for a while.
+Every one of **my** integrations - meaning any row in the table above where the maintainer is listed as **melcom** - ships with a small `/tools/` folder. It is easy to miss, but worth knowing about if you plan to keep one of my plugins installed for a while.
 
-Inside is **Galaxy Plugin Scout** - a PowerShell tool I built specifically for the plugin structure used here. Point it at an installed plugin folder and it will:
+Inside is **Galaxy Plugin Scout** - a PowerShell tool I built specifically for the plugin structure used in my own repositories. It does not update the plugin itself, but the Python libraries bundled inside it under `/modules/`. Point it at an installed plugin folder and it will:
 
 * scan the plugin and resolve its actual Python dependency tree,
 * tell you exactly which libraries in `/modules/` are still needed, which are just taking up space, and which are missing,
 * back up the plugin before touching anything,
 * and fetch the correct Python 3.13 64-bit versions of anything that needs updating.
 
-In short: if a plugin's bundled libraries ever fall behind - now, in six months, or whenever GOG Galaxy or a platform API changes underneath it - you do not need to wait for me to push a new release. Run the Scout, review its report, and update the plugin yourself. There is also a dry-run mode if you just want to see what it would do before committing to any changes.
+In short: if a plugin's bundled libraries ever fall behind - now, in six months, or whenever GOG Galaxy or a platform API changes underneath it - you do not need to wait for me to push a new release. Run the Scout, review its report, and update the libraries yourself. There is also a dry-run mode if you just want to see what it would do before committing to any changes.
 
 You will find the current build of the tool, together with its own README and changelog, in the `/tools/` folder of each plugin repository.
+
+**Please note:** This tool was built for and tested against my own plugins only. I recommend using it exclusively on integrations marked with **melcom** as the maintainer in the table above. Using it on plugins from other maintainers is not supported and not something I recommend.
 
 ---
 
