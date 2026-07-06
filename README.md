@@ -77,7 +77,7 @@ In short: if a plugin's bundled libraries ever fall behind - now, in six months,
 
 You will find the current build of the tool, together with its own README and changelog, in the `/tools/` folder of each plugin repository.
 
-**Please note:** This tool was built for and tested against my own plugins only. I recommend using it exclusively on integrations marked with **melcom** as the maintainer in the table above. Using it on plugins from other maintainers is not supported and not something I recommend.
+> **Please note:** This tool was built for and tested against my own plugins only. I recommend using it exclusively on integrations marked with **melcom** as the maintainer in the table above. Using it on plugins from other maintainers is not supported and not something I recommend.
 
 ---
 
