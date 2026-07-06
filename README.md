@@ -2,9 +2,25 @@
 
 > **Notice:** This page is currently a preview to share ongoing progress and inform you about what is coming soon. Official releases will be linked here as they become available.
 
-A collection of community integrations modernized for the native **64-bit version of GOG Galaxy 2.1+**.
+GOG Galaxy is quietly moving to a native 64-bit client, and a lot of community integrations were never built with that in mind. Old 32-bit assumptions, outdated dependencies, deprecated APIs on the platform side - all of it adds up to plugins that simply stop working the moment you switch.
 
-The goal is to keep community integrations alive, compatible, and ready for the 64-bit client by updating dependencies and replacing outdated libraries.
+This repository is my attempt to keep that from happening. It is a collection of community integrations that have been rebuilt, dependency by dependency, for the **native 64-bit version of GOG Galaxy 2.1+** - so the tools you are used to keep working instead of quietly breaking under you.
+
+---
+
+## 🔄 Step 1: Get the 64-bit Galaxy Client
+
+Before any of the integrations below will do you any good, you need the 64-bit client itself. If you are still on GOG Galaxy 2.0, here is how to switch:
+
+![How to enable the 64-bit GOG Galaxy client](images/screenshot_2026-07-06%20042105.png)
+
+1. Open GOG Galaxy's settings (the gear icon) and go to **General**.
+2. Under **Experimental features and updates**, enable **"Be the first to try out new features and help us improve them"** (see the highlighted areas in the screenshot above).
+3. Wait a few minutes, or click the gear icon again and choose **Check for updates**.
+4. Give it another 2 to 4 minutes. If no update shows up in that time, restart GOG Galaxy.
+5. Shortly after restarting, you should see a notification that an update is available. Installing it takes you from the 32-bit version to the native 64-bit version.
+
+Once GOG Galaxy has updated itself to the native 64-bit build, you are ready for the integrations below.
 
 ---
 
@@ -26,20 +42,37 @@ The following integrations have been updated and validated for the 64-bit client
 | **PlayStation** | **melcom** | 💤 Maybe | ❌ | ✅ | ⏳ |
 | **Legacy Games** | **pippo-san** | ✅ Released | ❌ | ✅ | [Download](https://github.com/pippo-san/galaxy-integration-legacy-games) |
 
-**Legend:**  
-* ✅ = Implemented / Supported  
-* ❌ = Unsupported / Not implemented  
-* ⏳ = Planned  
+**Legend:**
+* ✅ = Implemented / Supported
+* ❌ = Unsupported / Not implemented
+* ⏳ = Planned
 
 ---
 
 ## 📦 How to Install
 
 1. **Exit GOG Galaxy** completely (ensure it is not running in the system tray).
-2. Download the desired integration ZIP file from the **Releases** tab.
+2. Pick the integration you want from the **Download** column in the table above and grab the ZIP file from its repository.
 3. Extract the contents into the GOG Galaxy plugins folder:
    * **Windows:** `%localappdata%\GOG.com\Galaxy\plugins\installed`
 4. **Restart GOG Galaxy** and connect your accounts via **Settings -> Integrations**.
+
+---
+
+## 🧰 Keeping Your Plugins Up to Date
+
+Every integration in this repository ships with a small `/tools/` folder. It is easy to miss, but worth knowing about if you plan to keep a plugin installed for a while.
+
+Inside is **Galaxy Plugin Scout** - a PowerShell tool I built specifically for the plugin structure used here. Point it at an installed plugin folder and it will:
+
+* scan the plugin and resolve its actual Python dependency tree,
+* tell you exactly which libraries in `/modules/` are still needed, which are just taking up space, and which are missing,
+* back up the plugin before touching anything,
+* and fetch the correct Python 3.13 64-bit versions of anything that needs updating.
+
+In short: if a plugin's bundled libraries ever fall behind - now, in six months, or whenever GOG Galaxy or a platform API changes underneath it - you do not need to wait for me to push a new release. Run the Scout, review its report, and update the plugin yourself. There is also a dry-run mode if you just want to see what it would do before committing to any changes.
+
+You will find the current build of the tool, together with its own README and changelog, in the `/tools/` folder of each plugin repository.
 
 ---
 
@@ -51,16 +84,6 @@ The following integrations have been updated and validated for the 64-bit client
 ### Why Python 3.13?
 
 The native 64-bit version of **GOG Galaxy** is built on Python 3.13. To avoid compatibility issues, all integrations in this repository are specifically built and tested against this Python version.
-
-### Internal Developer Tools
-
-To streamline updating and maintaining dependencies, I developed a unified PowerShell utility:
-
-* **melcom's Galaxy Plugin Scout (v1.1.20)**
-
-  An analyzer, cleaner, and dependency updater designed for GOG Galaxy 2.x plugins. It scans the plugin root, resolves import dependency trees (filtering standard libraries and internal namespaces), automatically backs up and purges unused modules, and uses `pip` to safely fetch and install updated Python 3.13 AMD64 dependencies.
-
-*Note: This is currently a private utility for my personal development workflow. However, if there is enough interest, I would be glad to release this little utility once it reaches a suitable state for a public release.*
 
 </details>
 
