@@ -49,13 +49,16 @@ The following integrations have been updated and validated for the 64-bit client
 
 ---
 
-## 📦 How to Install
+## 📦 How to Install a Plugin
+
+Each entry in the table above is one of my plugins, hosted in its own repository. Clicking **Download** takes you to that plugin's GitHub page, where the actual release ZIP is available.
 
 1. **Exit GOG Galaxy** completely (ensure it is not running in the system tray).
-2. Pick the integration you want from the **Download** column in the table above and grab the ZIP file from its repository.
-3. Extract the contents into the GOG Galaxy plugins folder:
+2. Click **Download** next to the integration you want and open that plugin's repository.
+3. Grab the latest release ZIP from there.
+4. Extract the contents into the GOG Galaxy plugins folder:
    * **Windows:** `%localappdata%\GOG.com\Galaxy\plugins\installed`
-4. **Restart GOG Galaxy** and connect your accounts via **Settings -> Integrations**.
+5. **Restart GOG Galaxy** and connect your accounts via **Settings -> Integrations**.
 
 ---
 
