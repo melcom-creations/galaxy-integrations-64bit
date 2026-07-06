@@ -8,7 +8,7 @@ This repository is my attempt to keep that from happening. It is a collection of
 
 ---
 
-## 🔄 Step 1: Get the 64-bit Galaxy Client
+## 🔄 Get the 64-bit Galaxy Client
 
 Before any of the integrations below will do you any good, you need the 64-bit client itself. If you are still on GOG Galaxy 2.0, here is how to switch:
 
