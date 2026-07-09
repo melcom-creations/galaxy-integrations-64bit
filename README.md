@@ -37,8 +37,8 @@ The following integrations have been updated and validated for the 64-bit client
 | **Steam** | **melcom** | ✅ Released | ✅ | ✅ | [Download](https://github.com/melcom-creations/galaxy-integration-steam) |
 | **Ubisoft Connect** | **melcom** | ✅ Released | ❌ | ✅ | [Download](https://github.com/melcom-creations/galaxy-integration-uplay) |
 | **EA App** | **melcom** | ✅ Released | ✅ | ✅ | [Download](https://github.com/melcom-creations/galaxy-integration-ea) |
-| **IndieGala** | **melcom** | ⏳ In Progress (Qt6 issue) | ❌ | ⏳ | ⏳ |
 | **Rockstar Games** | **melcom** | ⚠️ Pre-Released | ✅ | ✅ | [Download](https://github.com/melcom-creations/galaxy-integration-rockstar) |
+| **IndieGala** | **melcom** | ⏳ In Progress (Qt6 issue) | ❌ | ⏳ | ⏳ |
 | **PlayStation** | **melcom** | 💤 Maybe | ❌ | ✅ | ⏳ |
 | **Legacy Games** | **pippo-san** | ✅ Released | ❌ | ✅ | [Download](https://github.com/pippo-san/galaxy-integration-legacy-games) |
 
