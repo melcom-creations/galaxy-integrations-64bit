@@ -39,7 +39,7 @@ The following integrations have been updated and validated for the 64-bit client
 | **EA App** | **melcom** | ✅ Released | ✅ | ✅ | [Download](https://github.com/melcom-creations/galaxy-integration-ea) |
 | **Rockstar Games** | **melcom** | ⚠️ Pre-Released | ✅ | ✅ | [Download](https://github.com/melcom-creations/galaxy-integration-rockstar) |
 | **IndieGala** | **melcom** | ⏳ In Progress (Qt6 issue) | ❌ | ⏳ | ⏳ |
-| **PlayStation** | **melcom** | 💤 Maybe | ❌ | ✅ | ⏳ |
+| **PlayStation** | **n/a** | 💤 Maybe | ❌ | ✅ | ⏳ |
 | **Legacy Games** | **pippo-san** | ✅ Released | ❌ | ✅ | [Download](https://github.com/pippo-san/galaxy-integration-legacy-games) |
 
 **Legend:**
