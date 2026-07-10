@@ -12,7 +12,7 @@ This repository is my attempt to keep that from happening. It is a collection of
 
 Before any of the integrations below will do you any good, you need the 64-bit client itself. If you are still on GOG Galaxy 2.0, here is how to switch:
 
-<img src="images/screenshot_2026-07-06%20042105.png" alt="How to enable the 64-bit GOG Galaxy client" width="600">
+<img src="images/screenshot_2026-07-06%20042105.png" alt="How to enable the 64-bit GOG Galaxy client" width="400">
 
 1. Open GOG Galaxy's settings (the gear icon) and go to **General**.
 2. Under **Experimental features and updates**, enable **"Be the first to try out new features and help us improve them"** (see the highlighted areas in the screenshot above).
