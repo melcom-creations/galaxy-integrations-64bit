@@ -6,10 +6,10 @@ This folder contains the companion tools for the [melcom GOG Galaxy integrations
 
 ## 🧰 Available Tools
 
-|Tool|Purpose|Recommended for|
-|---|---|---|
-|[melcom Galaxy Plugin Updater](melcom-galaxy_plugin_updater/README.md)|Keeps installed melcom GOG Galaxy plugins up to date and creates backups before updating.|Plugin users|
-|[melcom Galaxy Plugin Scout](melcom-galaxy_plugin_scout/README.md)|Analyzes and maintains the bundled Python libraries in plugin `modules` folders.|Plugin development and maintenance|
+|Tool|Purpose|Recommended for|Download|
+|---|---|---|---|
+|[melcom Galaxy Plugin Updater](melcom-galaxy_plugin_updater/README.md)|Keeps installed melcom GOG Galaxy plugins up to date and creates backups before updating.|Plugin users|[v0.1.0 ZIP](melcom-galaxy_plugin_updater/melcom-galaxy_plugin_updater_v0.1.0.zip)|
+|[melcom Galaxy Plugin Scout](melcom-galaxy_plugin_scout/README.md)|Analyzes and maintains the bundled Python libraries in plugin `modules` folders.|Plugin development and maintenance|[v1.2.0 ZIP](melcom-galaxy_plugin_scout/melcom-galaxy_plugin_scout_1.2.0.zip)|
 
 ---
 
