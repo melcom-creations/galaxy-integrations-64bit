@@ -1,4 +1,4 @@
-# melcom GOG Galaxy v2.1+ Plugin Updater v0.1.1
+# melcom GOG Galaxy v2.1+ Plugin Updater v0.1.2
 
 A colorized Windows command-line tool that keeps your melcom GOG Galaxy 2.1+ integrations up to date.
 
@@ -12,6 +12,7 @@ The supported plugins are available at [melcom-creations/galaxy-integrations-64b
 - English and German interface
 - Checks installed supported plugins for available updates
 - Offers available integrations for installation when none are installed
+- Offers to hook up automatic [Steam Achievement Notifier](https://github.com/SteamAchievementNotifier/SteamAchievementNotifier) startup when installing the Steam plugin
 - Creates a ZIP backup before every update
 - Preserves Battle.net and itch.io credentials when needed
 - Colorized output and a log for every run
@@ -47,6 +48,16 @@ Older melcom integrations with incomplete manifest data are marked separately. T
 The updater checks your installed supported plugins, skips plugins that are already current, and creates a complete ZIP backup before installing an available update. First-time installations do not overwrite existing plugin folders.
 
 Backups and logs are created next to `update-plugins.bat` and `update-plugins-helpers.ps1`, in the `backups` and `logs` folders.
+
+---
+
+## 🏆 Steam Achievement Notifier Integration
+
+[Steam Achievement Notifier](https://github.com/SteamAchievementNotifier/SteamAchievementNotifier) is a free third-party tool that pops up a notification whenever you unlock a Steam achievement. It normally has to be started by hand before you launch a game.
+
+When installing the Steam plugin for the first time, the updater offers to add a small piece of code to `plugin.py` so Steam Achievement Notifier starts automatically whenever you launch a Steam game from the GOG Galaxy client - no more starting it manually. If you already have this integration and later run an update, the updater asks whether to keep it; declining removes the code again.
+
+> **Note:** This only wires up automatic startup. Steam Achievement Notifier itself is a separate tool and must be downloaded and installed on its own from the link above.
 
 ---
 
