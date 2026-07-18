@@ -24,7 +24,7 @@ The table below provides an overview of community integrations for the native 64
 | **Ubisoft Connect** | **melcom** | ✅ Released | ❌ | ✅ | [Download](https://github.com/melcom-creations/galaxy-integration-uplay) |
 | **EA app** | **melcom** | ✅ Released | ✅ | ✅ | [Download](https://github.com/melcom-creations/galaxy-integration-ea) |
 | **Rockstar Games Launcher** | **melcom** | ✅ Released | ✅ | ✅ | [Download](https://github.com/melcom-creations/galaxy-integration-rockstar) |
-| **IndieGala** | **melcom** | ⏳ In Development | ❌ | ⏳ | ⏳ |
+| **IndieGala** | **melcom** | ⏳ | ❌ | ⏳ | ⏳ |
 | **PlayStation Network** | **multimediality** | ✅ Released | ✅ | ✅ | [Download](https://github.com/multimediality/gog-psn-integration) |
 | **Legacy Games** | **pippo-san** | ✅ Released | ❌ | ✅ | [Download](https://github.com/pippo-san/galaxy-integration-legacy-games) |
 
