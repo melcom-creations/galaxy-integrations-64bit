@@ -38,12 +38,12 @@ The table below provides an overview of community integrations for the native 64
 
 ## 📦 How to Install a Plugin
 
-Each released integration is hosted in its own repository. Open the repository linked in the table above and read its installation instructions before downloading anything. The required release package and folder structure may differ between plugins.
+Use the **Download** link in the table above to access the integration you want to install. From there, download the latest release package intended for GOG Galaxy 2.1+ 64-bit. Some integrations may include additional installation notes on their download page.
 
 1. Exit GOG Galaxy completely and make sure it is no longer running in the system tray.
-2. Open the repository of the integration you want to install.
-3. Go to its latest release and download the package intended for GOG Galaxy 2.1+ 64-bit. Do not use the automatically generated GitHub source code archives unless the repository explicitly instructs you to do so.
-4. Follow the installation instructions provided in that repository. Unless stated otherwise, Windows plugins are extracted into:
+2. Click **Download** next to the integration you want to install.
+3. Download the latest release package for GOG Galaxy 2.1+ 64-bit.
+4. Extract the plugin folder into:
 
    ```text
    %localappdata%\GOG.com\Galaxy\plugins\installed
