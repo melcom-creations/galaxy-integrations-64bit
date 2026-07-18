@@ -27,7 +27,9 @@ These integrations require the native 64-bit version of GOG Galaxy 2.1 or later.
 | **Legacy Games** | **pippo-san** | ✅ Released | ❌ | ✅ | [Download](https://github.com/pippo-san/galaxy-integration-legacy-games) |
 
 > [!IMPORTANT]
-> This repository is an overview, not a central support hub. For questions and bug reports, contact the maintainer listed in the table. I provide support only for integrations maintained by **melcom**.
+> This repository is an overview, not a central support hub. Each integration remains the responsibility of the maintainer listed in the table.
+>
+> All installation, maintenance-tool, troubleshooting, log-creation, and contact instructions below apply exclusively to integrations maintained by **melcom**. For third-party integrations, follow the instructions in the linked repository and contact its maintainer.
 
 ✅ Supported · ❌ Not supported · ⏳ Planned or in development
 
@@ -53,23 +55,23 @@ Both maintenance tools are available exclusively from this repository's [`/tools
 
 ### 🔄 melcom GOG Galaxy Plugin Updater
 
-The [melcom GOG Galaxy Plugin Updater](https://github.com/melcom-creations/galaxy-integrations-64bit/tree/main/tools/melcom-galaxy_plugin_updater) is the recommended Windows tool for installing missing integrations and updating existing ones. It creates a ZIP backup and log before each update, can preserve Battle.net and itch.io credentials, and offers optional Steam Achievement Notifier startup support. No separate Python installation is required.
+The [melcom GOG Galaxy Plugin Updater](https://github.com/melcom-creations/galaxy-integrations-64bit/tree/main/tools/melcom-galaxy_plugin_updater) is the recommended Windows tool for installing and updating supported integrations. It creates a ZIP backup and log before each update, can preserve Battle.net and itch.io credentials, and offers optional Steam Achievement Notifier startup support. No separate Python installation is required.
 
 ### 🔬 Galaxy Plugin Scout - Advanced Users Only
 
-[melcom's Galaxy Plugin Scout](https://github.com/melcom-creations/galaxy-integrations-64bit/tree/main/tools/melcom-galaxy_plugin_scout) is an advanced tool for analyzing and maintaining Python libraries inside plugin `modules` folders. It provides a dry-run mode, library update checks, and maintenance that can remove unused modules and install required dependencies. It creates backups before making changes, requires Python 3.13 64-bit with pip, and must not be used on third-party plugins.
+[melcom's Galaxy Plugin Scout](https://github.com/melcom-creations/galaxy-integrations-64bit/tree/main/tools/melcom-galaxy_plugin_scout) is an advanced tool for analyzing and maintaining Python libraries inside plugin `modules` folders. It provides a dry-run mode, library update checks, and maintenance that can remove unused modules and install required dependencies. It creates backups before making changes and requires Python 3.13 64-bit with pip.
 
 ---
 
 ## ⚙️ Technical Compatibility
 
-These integrations target GOG Galaxy 2.1+ 64-bit, which uses Python 3.13 for community plugins. They are not compatible with the older 32-bit GOG Galaxy 2.0 client; check the linked repository for any additional requirements.
+All integrations listed on this page are intended for GOG Galaxy 2.1+ 64-bit, which uses Python 3.13 for community plugins. They are not compatible with the older 32-bit GOG Galaxy 2.0 client; check the linked repository for any additional requirements.
 
 ---
 
 ## 🛠️ What to Do If a Plugin Has Problems
 
-Before reporting a problem, create fresh diagnostic files. Old logs may contain information from previous sessions and often do not show the current problem.
+Before contacting me, create fresh diagnostic files. Old logs may contain information from previous sessions and often do not show the current problem.
 
 1. Close GOG Galaxy completely, including the system tray application.
 2. Open the following directory and delete the existing log files:
@@ -114,12 +116,12 @@ Thank you both for having my back!
 
 **GitHub Issues are intentionally disabled.** Health-related limitations prevent me from reliably managing separate issue trackers across all of my plugin repositories.
 
-Before contacting me, follow **What to Do If a Plugin Has Problems** and prepare a fresh plugin log with a detailed description.
+Before contacting me about an integration maintained by **melcom**, follow **What to Do If a Plugin Has Problems** and prepare a fresh plugin log with a detailed description.
 
 * **GOG:** Send me a message or add me as a friend through my [GOG profile](https://www.gog.com/u/melcom).
 * **Email:** `melcom @ gmx.net`
 * **Discord:** `.melcom` - the leading dot is part of the username. You can send me a message or add me as a friend.
 
-Logs can be attached directly or shared using an accessible cloud storage link, such as Dropbox, OneDrive, Google Drive, or a similar service. These contact options apply only to integrations maintained by **melcom**; for third-party integrations, contact the maintainer listed in the table.
+Logs can be attached directly or shared using an accessible cloud storage link, such as Dropbox, OneDrive, Google Drive, or a similar service.
 
 Response times may vary depending on my health and available development time. Thank you for your understanding.
