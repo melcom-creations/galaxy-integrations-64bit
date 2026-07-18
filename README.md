@@ -14,19 +14,19 @@ These integrations require the native 64-bit version of GOG Galaxy 2.1 or later.
 
 The table below provides an overview of community integrations for the native 64-bit version of GOG Galaxy 2.1+. It includes plugins maintained by me as well as compatible integrations from other developers. Integrations that are not yet available are clearly marked as being in development.
 
-| Integration | Maintainer | Status | Achievements | Game Time | Repository |
+| Integration | Maintainer | Status | Achievements | Game Time | Download |
 | :--- | :--- | :---: | :---: | :---: | :--- |
-| **Amazon Games** | **melcom** | ✅ Released | ❌ | ✅ | [Repository](https://github.com/melcom-creations/galaxy-integration-amazon) |
-| **Battle.net** | **melcom** | ✅ Released | ❌ | ✅ | [Repository](https://github.com/melcom-creations/galaxy-integration-battlenet) |
-| **Humble Bundle** | **melcom** | ✅ Released | ❌ | ✅ | [Repository](https://github.com/melcom-creations/galaxy-integration-humble) |
-| **itch.io** | **melcom** | ✅ Released | ❌ | ✅ | [Repository](https://github.com/melcom-creations/galaxy-integration-itch) |
-| **Steam** | **melcom** | ✅ Released | ✅ | ✅ | [Repository](https://github.com/melcom-creations/galaxy-integration-steam) |
-| **Ubisoft Connect** | **melcom** | ✅ Released | ❌ | ✅ | [Repository](https://github.com/melcom-creations/galaxy-integration-uplay) |
-| **EA app** | **melcom** | ✅ Released | ✅ | ✅ | [Repository](https://github.com/melcom-creations/galaxy-integration-ea) |
-| **Rockstar Games Launcher** | **melcom** | ✅ Released | ✅ | ✅ | [Repository](https://github.com/melcom-creations/galaxy-integration-rockstar) |
-| **IndieGala** | **melcom** | ⏳ | ❌ | ⏳ | ⏳ |
-| **PlayStation Network** | **multimediality** | ✅ Released | ✅ | ✅ | [Repository](https://github.com/multimediality/gog-psn-integration) |
-| **Legacy Games** | **pippo-san** | ✅ Released | ❌ | ✅ | [Repository](https://github.com/pippo-san/galaxy-integration-legacy-games) |
+| **Amazon Games** | **melcom** | ✅ Released | ❌ | ✅ | [Download](https://github.com/melcom-creations/galaxy-integration-amazon) |
+| **Battle.net** | **melcom** | ✅ Released | ❌ | ✅ | [Download](https://github.com/melcom-creations/galaxy-integration-battlenet) |
+| **Humble Bundle** | **melcom** | ✅ Released | ❌ | ✅ | [Download](https://github.com/melcom-creations/galaxy-integration-humble) |
+| **itch.io** | **melcom** | ✅ Released | ❌ | ✅ | [Download](https://github.com/melcom-creations/galaxy-integration-itch) |
+| **Steam** | **melcom** | ✅ Released | ✅ | ✅ | [Download](https://github.com/melcom-creations/galaxy-integration-steam) |
+| **Ubisoft Connect** | **melcom** | ✅ Released | ❌ | ✅ | [Download](https://github.com/melcom-creations/galaxy-integration-uplay) |
+| **EA app** | **melcom** | ✅ Released | ✅ | ✅ | [Download](https://github.com/melcom-creations/galaxy-integration-ea) |
+| **Rockstar Games Launcher** | **melcom** | ✅ Released | ✅ | ✅ | [Download](https://github.com/melcom-creations/galaxy-integration-rockstar) |
+| **IndieGala** | **melcom** | ⏳ In Development | ❌ | ⏳ | ⏳ |
+| **PlayStation Network** | **multimediality** | ✅ Released | ✅ | ✅ | [Download](https://github.com/multimediality/gog-psn-integration) |
+| **Legacy Games** | **pippo-san** | ✅ Released | ❌ | ✅ | [Download](https://github.com/pippo-san/galaxy-integration-legacy-games) |
 
 **Legend:**
 
@@ -44,9 +44,11 @@ Each released integration is hosted in its own repository. Open the repository l
 2. Open the repository of the integration you want to install.
 3. Go to its latest release and download the package intended for GOG Galaxy 2.1+ 64-bit. Do not use the automatically generated GitHub source code archives unless the repository explicitly instructs you to do so.
 4. Follow the installation instructions provided in that repository. Unless stated otherwise, Windows plugins are extracted into:
+
    ```text
    %localappdata%\GOG.com\Galaxy\plugins\installed
    ```
+
 5. Restart GOG Galaxy and connect the account through Settings -> Integrations.
 
 ---
