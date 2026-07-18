@@ -28,6 +28,9 @@ The table below provides an overview of community integrations for the native 64
 | **PlayStation Network** | **multimediality** | ✅ Released | ✅ | ✅ | [Download](https://github.com/multimediality/gog-psn-integration) |
 | **Legacy Games** | **pippo-san** | ✅ Released | ❌ | ✅ | [Download](https://github.com/pippo-san/galaxy-integration-legacy-games) |
 
+> [!IMPORTANT]
+> This repository provides a central overview of compatible 64-bit community integrations. It is not a central support hub. Questions and bug reports must be directed to the maintainer listed in the table above. I can only investigate and provide support for integrations maintained by **melcom**. For third-party integrations, please use the linked repository and contact the respective maintainer directly.
+
 **Legend:**
 
 * ✅ = Implemented / Supported
@@ -93,12 +96,16 @@ Thank you both for having my back!
 
 ## 🤝 Support & Feedback
 
+I can only investigate and provide support for integrations maintained by **melcom**. For third-party integrations, please contact the maintainer listed in the integration table and use the corresponding repository for questions and bug reports.
+
 This project is maintained by a single individual. Response times may vary, especially during periods when health-related limitations reduce available development time.
 
-**GitHub Issues are intentionally disabled.**
+**GitHub Issues are intentionally disabled for my integrations.**
 
-If you would like to report a bug or suggest an improvement, please use the contact form on my website:
+If you would like to report a bug or suggest an improvement for an integration maintained by **melcom**, please use the contact form on my website:
 
 📩 [melcom's Contact Form](https://melcom-creations.github.io/melcom-music/contact.html)
+
+Support requests concerning third-party integrations cannot be investigated or forwarded by me.
 
 Thank you for your patience and support!
