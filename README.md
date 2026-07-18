@@ -1,18 +1,16 @@
 # Community Integrations for GOG Galaxy 2.1+ (64-bit)
 
-This page provides a central overview of community integrations available for the native 64-bit version of GOG Galaxy 2.1+. It includes plugins maintained by me as well as compatible integrations from other developers. Each plugin remains in its own repository and is linked separately below. All integrations listed here are intended exclusively for the new 64-bit GOG Galaxy client.
+This repository provides a central overview of community integrations compatible with GOG Galaxy 2.1+ 64-bit. Each integration remains in its own repository and is linked in the table below.
 
 ---
 
 ## 🔄 Get the 64-bit GOG Galaxy Client
 
-These integrations require the native 64-bit version of GOG Galaxy 2.1 or later. If you are still using an older 32-bit installation, download and install the latest Windows version from the [official GOG Galaxy website](https://www.gog.com/galaxy). Once the current 64-bit client is installed, you can use the integrations listed below.
+These integrations require the native 64-bit version of GOG Galaxy 2.1 or later. If you still use an older 32-bit installation, download the latest Windows client from the [official GOG Galaxy website](https://www.gog.com/galaxy).
 
 ---
 
 ## 🚀 64-bit Community Integration Status
-
-The table below provides an overview of community integrations for the native 64-bit version of GOG Galaxy 2.1+. It includes plugins maintained by me as well as compatible integrations from other developers. Integrations that are not yet available are clearly marked as being in development.
 
 | Integration | Maintainer | Status | Achievements | Game Time | Download |
 | :--- | :--- | :---: | :---: | :---: | :--- |
@@ -29,90 +27,72 @@ The table below provides an overview of community integrations for the native 64
 | **Legacy Games** | **pippo-san** | ✅ Released | ❌ | ✅ | [Download](https://github.com/pippo-san/galaxy-integration-legacy-games) |
 
 > [!IMPORTANT]
-> This repository provides a central overview of compatible 64-bit community integrations. It is not a central support hub. Questions and bug reports must be directed to the maintainer listed in the table above. I can only investigate and provide support for integrations maintained by **melcom**. For third-party integrations, please use the linked repository and contact the respective maintainer directly.
+> This repository is an overview, not a central support hub. For questions and bug reports, contact the maintainer listed in the table. I provide support only for integrations maintained by **melcom**.
 
-**Legend:**
-
-* ✅ = Implemented / Supported
-* ❌ = Unsupported / Not implemented
-* ⏳ = In development / Planned
+✅ Supported · ❌ Not supported · ⏳ Planned or in development
 
 ---
 
 ## 📦 How to Install a Plugin
 
-Use the **Download** link in the table above to access the integration you want to install. From there, download the latest release package intended for GOG Galaxy 2.1+ 64-bit. Some integrations may include additional installation notes on their download page.
-
-1. Exit GOG Galaxy completely and make sure it is no longer running in the system tray.
-2. Click **Download** next to the integration you want to install.
-3. Download the latest release package for GOG Galaxy 2.1+ 64-bit.
-4. Extract the plugin folder into:
+1. Close GOG Galaxy completely, including the system tray application.
+2. Use the **Download** link in the table and download the latest 64-bit release.
+3. Extract the plugin folder into:
 
    ```text
    %localappdata%\GOG.com\Galaxy\plugins\installed
    ```
 
-5. Restart GOG Galaxy and connect the account through Settings -> Integrations.
+4. Start GOG Galaxy and connect the account through **Settings -> Integrations**.
 
 ---
 
 ## 🧰 Plugin Maintenance Tools
 
-Both maintenance tools are located in the central [`/tools/` directory](https://github.com/melcom-creations/galaxy-integrations-64bit/tree/main/tools) of this repository. They are available exclusively here and are no longer included separately with each plugin. Each tool serves a different purpose, so choose the one appropriate for the task.
+Both maintenance tools are available exclusively from this repository's [`/tools/` directory](https://github.com/melcom-creations/galaxy-integrations-64bit/tree/main/tools).
 
 ### 🔄 melcom GOG Galaxy Plugin Updater
 
-The [melcom GOG Galaxy Plugin Updater](https://github.com/melcom-creations/galaxy-integrations-64bit/tree/main/tools/melcom-galaxy_plugin_updater) is the primary and recommended tool for most users. It detects supported melcom integrations installed on Windows, checks for newer releases, and can also install integrations that are still missing. Before every update, it creates a complete ZIP backup and records the process in a log.
-
-The updater can preserve personal Battle.net and itch.io credentials during an update. When installing the Steam integration, it can also offer optional automatic startup support for Steam Achievement Notifier. No separate Python installation is required to use the updater.
+The [melcom GOG Galaxy Plugin Updater](https://github.com/melcom-creations/galaxy-integrations-64bit/tree/main/tools/melcom-galaxy_plugin_updater) is the recommended Windows tool for installing missing integrations and updating existing ones. It creates a ZIP backup and log before each update, can preserve Battle.net and itch.io credentials, and offers optional Steam Achievement Notifier startup support. No separate Python installation is required.
 
 ### 🔬 Galaxy Plugin Scout - Advanced Users Only
 
-[melcom's Galaxy Plugin Scout](https://github.com/melcom-creations/galaxy-integrations-64bit/tree/main/tools/melcom-galaxy_plugin_scout) analyzes and maintains the Python libraries inside the `modules` folders of my integrations. It provides a safe dry-run mode, a library update check, and a full maintenance mode that can remove unused modules and install required dependencies. Unlike the regular updater, it requires Python 3.13 64-bit with pip.
-
-The Scout is intended for experienced users who understand Python dependencies and bundled plugin libraries. Its maintenance modes can modify the contents of a plugin, although backups are created before changes are made. It supports my own integrations only and must not be used to modify third-party plugins.
+[melcom's Galaxy Plugin Scout](https://github.com/melcom-creations/galaxy-integrations-64bit/tree/main/tools/melcom-galaxy_plugin_scout) is an advanced tool for analyzing and maintaining Python libraries inside plugin `modules` folders. It provides a dry-run mode, library update checks, and maintenance that can remove unused modules and install required dependencies. It creates backups before making changes, requires Python 3.13 64-bit with pip, and must not be used on third-party plugins.
 
 ---
 
 ## ⚙️ Technical Compatibility
 
-The native 64-bit version of GOG Galaxy 2.1+ runs community integrations with Python 3.13. My integrations are built and tested specifically for this environment and are not compatible with the older 32-bit GOG Galaxy 2.0 client. Third-party integrations listed on this page may have additional requirements, so always check their repository before installation.
+These integrations target GOG Galaxy 2.1+ 64-bit, which uses Python 3.13 for community plugins. They are not compatible with the older 32-bit GOG Galaxy 2.0 client; check the linked repository for any additional requirements.
 
 ---
 
 ## 🛠️ What to Do If a Plugin Has Problems
 
-If you experience a problem with an integration maintained by **melcom**, please create fresh diagnostic files before contacting me. Old log files may contain information from previous sessions and often do not show what caused the current problem.
+Before reporting a problem, create fresh diagnostic files. Old logs may contain information from previous sessions and often do not show the current problem.
 
-1. Close GOG Galaxy completely and make sure it is no longer running in the system tray.
+1. Close GOG Galaxy completely, including the system tray application.
 2. Open the following directory and delete the existing log files:
 
    ```text
    %ProgramData%\GOG.com\Galaxy\logs
    ```
 
-3. Open the plugin storage directory:
+3. Open the plugin storage directory and delete only the `-storage.db` file belonging to the affected integration:
 
    ```text
    C:\ProgramData\GOG.com\Galaxy\storage\plugins
    ```
 
-4. Delete only the `-storage.db` file belonging to the integration that is causing the problem. Do not delete the database files of any other integrations. If you are unsure which file belongs to the affected plugin, do not delete anything from this directory.
-5. Start GOG Galaxy again and reproduce the problem exactly as it occurred before.
-6. Close GOG Galaxy completely once more. This ensures that the newly created log is fully written.
-7. Return to the logs directory and locate the newly created log file belonging to the affected integration. Send only this plugin log, not the entire logs folder.
+   Do not delete database files belonging to other integrations. If you are unsure which file is correct, do not delete anything from this directory.
+4. Start GOG Galaxy, reproduce the problem, and close the client completely again so the new log is fully written.
+5. Return to the logs directory and send only the newly created log belonging to the affected integration, not the entire folder.
 
-When reporting the problem, please also explain:
-
-* which integration is affected;
-* exactly what you did;
-* what you expected to happen;
-* what happened instead;
-* whether the problem can be reproduced consistently.
+Include the affected integration, the exact steps taken, the expected and actual result, and whether the problem can be reproduced.
 
 Without a fresh plugin log and a detailed description, I cannot reliably determine what is causing the problem.
 
-Once you have prepared the fresh plugin log and the detailed description, continue with [Support & Feedback](#-support--feedback) to find out how to contact me and send the required information.
+Once everything is ready, continue with [Support & Feedback](#-support--feedback) for contact options.
 
 ---
 
@@ -132,18 +112,14 @@ Thank you both for having my back!
 
 ## 🤝 Support & Feedback
 
-**GitHub Issues are intentionally disabled for my integrations.** I maintain several integrations on my own and, for health reasons, I do not have the capacity to monitor and manage separate GitHub Issues sections across all of these repositories. Keeping Issues disabled allows me to focus my limited time and energy on maintaining and improving the plugins themselves.
+**GitHub Issues are intentionally disabled.** Health-related limitations prevent me from reliably managing separate issue trackers across all of my plugin repositories.
 
-If you need to report a problem with an integration maintained by **melcom**, please first follow the instructions in the **What to Do If a Plugin Has Problems** section above. Prepare a fresh plugin log and include a detailed description of the problem.
-
-You can contact me through any of the following channels:
+Before contacting me, follow **What to Do If a Plugin Has Problems** and prepare a fresh plugin log with a detailed description.
 
 * **GOG:** Send me a message or add me as a friend through my [GOG profile](https://www.gog.com/u/melcom).
 * **Email:** `melcom @ gmx.net`
 * **Discord:** `.melcom` - the leading dot is part of the username. You can send me a message or add me as a friend.
 
-Plugin logs can be sent directly where attachments are supported or shared through a Dropbox or OneDrive link.
+Logs can be attached directly or shared through Dropbox or OneDrive. These contact options apply only to integrations maintained by **melcom**; for third-party integrations, contact the maintainer listed in the table.
 
-These contact options are exclusively for integrations maintained by **melcom**. For third-party integrations listed in this overview, please contact the maintainer named in the integration table and use the corresponding repository for questions and bug reports. I cannot investigate or forward reports concerning third-party integrations.
-
-Please understand that response times may vary depending on my health and available development time. Thank you for your patience and understanding.
+Response times may vary depending on my health and available development time. Thank you for your understanding.
