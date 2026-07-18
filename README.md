@@ -80,6 +80,40 @@ The native 64-bit version of GOG Galaxy 2.1+ runs community integrations with Py
 
 ---
 
+## 🛠️ What to Do If a Plugin Has Problems
+
+If you experience a problem with an integration maintained by **melcom**, please create fresh diagnostic files before contacting me. Old log files may contain information from previous sessions and often do not show what caused the current problem.
+
+1. Close GOG Galaxy completely and make sure it is no longer running in the system tray.
+2. Open the following directory and delete the existing log files:
+
+   ```text
+   %ProgramData%\GOG.com\Galaxy\logs
+   ```
+
+3. Open the plugin storage directory:
+
+   ```text
+   C:\ProgramData\GOG.com\Galaxy\storage\plugins
+   ```
+
+4. Delete only the `-storage.db` file belonging to the integration that is causing the problem. Do not delete the database files of any other integrations. If you are unsure which file belongs to the affected plugin, do not delete anything from this directory.
+5. Start GOG Galaxy again and reproduce the problem exactly as it occurred before.
+6. Close GOG Galaxy completely once more. This ensures that the newly created log is fully written.
+7. Return to the logs directory and locate the newly created log file belonging to the affected integration. Send only this plugin log, not the entire logs folder.
+
+When reporting the problem, please also explain:
+
+* which integration is affected;
+* exactly what you did;
+* what you expected to happen;
+* what happened instead;
+* whether the problem can be reproduced consistently.
+
+Without a fresh plugin log and a detailed description, I cannot reliably determine what is causing the problem.
+
+---
+
 ## ❤️ Special Thanks
 
 I want to take a moment to thank the people who kept me going during this intense development phase:
@@ -96,16 +130,18 @@ Thank you both for having my back!
 
 ## 🤝 Support & Feedback
 
-I can only investigate and provide support for integrations maintained by **melcom**. For third-party integrations, please contact the maintainer listed in the integration table and use the corresponding repository for questions and bug reports.
+**GitHub Issues are intentionally disabled for my integrations.** I maintain several integrations on my own and, for health reasons, I do not have the capacity to monitor and manage separate GitHub Issues sections across all of these repositories. Keeping Issues disabled allows me to focus my limited time and energy on maintaining and improving the plugins themselves.
 
-This project is maintained by a single individual. Response times may vary, especially during periods when health-related limitations reduce available development time.
+If you need to report a problem with an integration maintained by **melcom**, please first follow the instructions in the **What to Do If a Plugin Has Problems** section above. Prepare a fresh plugin log and include a detailed description of the problem.
 
-**GitHub Issues are intentionally disabled for my integrations.**
+You can contact me through any of the following channels:
 
-If you would like to report a bug or suggest an improvement for an integration maintained by **melcom**, please use the contact form on my website:
+* **GOG:** Send me a message or add me as a friend through my [GOG profile](https://www.gog.com/u/melcom).
+* **Email:** `melcom @ gmx.net`
+* **Discord:** `.melcom` - the leading dot is part of the username. You can send me a message or add me as a friend.
 
-📩 [melcom's Contact Form](https://melcom-creations.github.io/melcom-music/contact.html)
+Plugin logs can be sent directly where attachments are supported or shared through a Dropbox or OneDrive link.
 
-Support requests concerning third-party integrations cannot be investigated or forwarded by me.
+These contact options are exclusively for integrations maintained by **melcom**. For third-party integrations listed in this overview, please contact the maintainer named in the integration table and use the corresponding repository for questions and bug reports. I cannot investigate or forward reports concerning third-party integrations.
 
-Thank you for your patience and support!
+Please understand that response times may vary depending on my health and available development time. Thank you for your patience and understanding.
