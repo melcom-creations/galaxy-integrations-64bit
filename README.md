@@ -112,6 +112,8 @@ When reporting the problem, please also explain:
 
 Without a fresh plugin log and a detailed description, I cannot reliably determine what is causing the problem.
 
+Once you have prepared the fresh plugin log and the detailed description, continue with [Support & Feedback](#-support--feedback) to find out how to contact me and send the required information.
+
 ---
 
 ## ❤️ Special Thanks
