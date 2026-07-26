@@ -2,7 +2,7 @@
 <#
 .SYNOPSIS
     melcom's Galaxy Plugin Scout  -  Analyzer & Updater
-    Version 1.2.0  |  For GOG Galaxy 2.x  (64-bit, Python 3.13)
+    Version 1.2.1  |  For GOG Galaxy 2.x  (64-bit, Python 3.13)
 .NOTES
     Author  : melcom
     Created : 2026-07-11
@@ -86,7 +86,7 @@ function Magenta ($t){ clr '95' $t }
 # Globals
 # ---------------------------------------------------------------------------
 $TOOL_NAME    = "melcom's Galaxy Plugin Scout"
-$TOOL_VERSION = "v1.2.0"
+$TOOL_VERSION = "v1.2.1"
 # Sentinel returned by Select-PluginFromInventory when the person picks
 # "[a] All plugins" instead of a single one. Not a real path, so it can
 # never collide with an actual plugin RootPath.
@@ -492,6 +492,7 @@ function Select-PluginFromInventory {
     }
 
     $sorted = @($inventory.Valid | Sort-Object Name, Guid)
+    $nameWidth = ($sorted | ForEach-Object { $_.Name.Length } | Measure-Object -Maximum).Maximum
 
     while ($true) {
         Write-Msg ""
@@ -504,29 +505,32 @@ function Select-PluginFromInventory {
         Write-Msg ""
 
         for ($i = 0; $i -lt $sorted.Count; $i++) {
-            Write-Msg ("    " + (Green ("[{0}]" -f ($i + 1))) + "  " + $sorted[$i].Name + "  (" + $sorted[$i].Guid + ")")
+            $selectionKey = Bold (Cyan ("[{0}]" -f ($i + 1)))
+            $pluginName = White ($sorted[$i].Name.PadRight($nameWidth))
+            $pluginId = Dim ("ID: " + $sorted[$i].Guid)
+            Write-Msg ("    " + $selectionKey + "  " + $pluginName + "  " + $pluginId)
         }
         Write-Msg ""
 
         if ($lang -eq '1') {
-            Write-Msg ("    " + (Green "[a]") + "  All plugins listed above (asks its questions once, then runs through all of them)")
+            Write-Msg ("    " + (Bold (Cyan "[a]")) + "  All plugins listed above (asks its questions once, then runs through all of them)")
         } else {
-            Write-Msg ("    " + (Green "[a]") + "  Alle oben gelisteten Plugins (fragt einmal, laeuft dann durch alle durch)")
+            Write-Msg ("    " + (Bold (Cyan "[a]")) + "  Alle oben gelisteten Plugins (fragt einmal, laeuft dann durch alle durch)")
         }
         Write-Msg ""
 
         $manualOption = $sorted.Count + 1
         if ($lang -eq '1') {
-            Write-Msg ("    " + (White ("[{0}]" -f $manualOption)) + "  Enter a path manually instead (e.g. a plugin outside this folder)")
+            Write-Msg ("    " + (Bold (White ("[{0}]" -f $manualOption))) + "  Enter a path manually instead (e.g. a plugin outside this folder)")
         } else {
-            Write-Msg ("    " + (White ("[{0}]" -f $manualOption)) + "  Stattdessen Pfad manuell eingeben (z.B. Plugin ausserhalb dieses Ordners)")
+            Write-Msg ("    " + (Bold (White ("[{0}]" -f $manualOption))) + "  Stattdessen Pfad manuell eingeben (z.B. Plugin ausserhalb dieses Ordners)")
         }
         Write-Msg ""
 
         if ($lang -eq '1') {
-            Write-Msg ("    " + (White "[b]") + "  Back to mode selection")
+            Write-Msg ("    " + (Bold (White "[b]")) + "  Back to mode selection")
         } else {
-            Write-Msg ("    " + (White "[b]") + "  Zurueck zur Modusauswahl")
+            Write-Msg ("    " + (Bold (White "[b]")) + "  Zurueck zur Modusauswahl")
         }
         Write-Msg ""
 
@@ -558,7 +562,30 @@ function Select-PluginFromInventory {
         if (-not [int]::TryParse($choice, [ref]$asInt)) { continue }
         if ($asInt -eq $manualOption) { return (Get-PluginRoot -lang $lang) }
         if ($asInt -ge 1 -and $asInt -le $sorted.Count) {
-            return ($sorted[$asInt - 1].RootPath + '\')
+            $selected = $sorted[$asInt - 1]
+            Write-Msg ""
+            if ($lang -eq '1') {
+                Write-Msg ("  " + (Yellow "Selected:") + " " + (Bold (White ("[$asInt] " + $selected.Name))) + "  " + (Dim ("ID: " + $selected.Guid)))
+            } else {
+                Write-Msg ("  " + (Yellow "Ausgewaehlt:") + " " + (Bold (White ("[$asInt] " + $selected.Name))) + "  " + (Dim ("ID: " + $selected.Guid)))
+            }
+
+            while ($true) {
+                if ($lang -eq '1') {
+                    $confirmation = (Read-Msg "  > Press Enter to continue, or 'b' to choose again").Trim()
+                } else {
+                    $confirmation = (Read-Msg "  > Enter zum Fortfahren, oder 'b' fuer eine andere Auswahl").Trim()
+                }
+
+                if (-not $confirmation) { return ($selected.RootPath + '\') }
+                if ($confirmation -eq 'b' -or $confirmation -eq 'B') { break }
+
+                if ($lang -eq '1') {
+                    Write-Msg (Yellow "  Please press Enter or enter 'b'.")
+                } else {
+                    Write-Msg (Yellow "  Bitte Enter druecken oder 'b' eingeben.")
+                }
+            }
         }
         # Anything else (0, out of range, etc.) just loops and shows the list again.
     }
@@ -1750,6 +1777,26 @@ function Start-Updater {
 function Invoke-VersionCheck {
     param($root, $lang)
 
+    $pluginName = Split-Path ($root.TrimEnd('\')) -Leaf
+
+    # A combined log is already active for "[a] all plugins". For a single
+    # plugin, initialize the same per-run log used by the other modes before
+    # the first status line is written.
+    if ($global:BatchLogFile) {
+        $global:LogFile = $null
+    } else {
+        $timestamp = Get-Date -Format 'yyyy-MM-dd_HH-mm-ss'
+        $logDir = Join-Path $PSScriptRoot 'logs'
+        if (-not (Test-Path $logDir)) { New-Item -ItemType Directory -Path $logDir -Force | Out-Null }
+        $global:LogFile = Join-Path $logDir "${timestamp}_${pluginName}.log"
+
+        if ($lang -eq '1') {
+            Write-Msg (Dim ("  Log file: " + $global:LogFile))
+        } else {
+            Write-Msg (Dim ("  Log-Datei: " + $global:LogFile))
+        }
+    }
+
     Write-Msg ""
     Write-Msg (Cyan "  ================================================================")
     if ($lang -eq '1') { Write-Msg (Bold (White "   LIBRARY UPDATE CHECK  --  asks before installing anything")) }
@@ -1757,7 +1804,6 @@ function Invoke-VersionCheck {
     Write-Msg (Cyan "  ================================================================")
     Write-Msg ""
 
-    $pluginName = Split-Path ($root.TrimEnd('\')) -Leaf
     Write-Msg ("  " + (Cyan "Plugin :") + " " + (White $pluginName))
     Write-Msg ""
 
