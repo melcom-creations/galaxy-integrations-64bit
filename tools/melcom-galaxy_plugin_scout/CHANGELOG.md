@@ -2,6 +2,18 @@
 
 All notable changes to **melcom's Galaxy Plugin Scout** will be documented in this file. The versioning scheme follows semantic guidelines.
 
+## Version 1.2.1
+
+### Changed in Version 1.2.1
+
+- **Clearer plugin selection:** Selection keys are now bold cyan, plugin names are bright and aligned, and technical plugin IDs are dimmed. After choosing a numbered plugin, the tool shows the selected number and name and waits for Enter before continuing. Entering `[b]` returns to the plugin list so an accidental choice can be corrected before any mode starts.
+
+### Fixed in Version 1.2.1
+
+- **Single-plugin Library-Check logging:** Mode 3 now initializes a per-run log before checking an individual plugin. Console output, prompts, summaries, and early error returns are written to `logs\YYYY-MM-DD_HH-mm-ss_PLUGIN.log`. The `[a]` all-plugins path continues to use only its combined log without creating redundant per-plugin files.
+
+---
+
 ## Version 1.2.0
 
 ### Overview for Version 1.2.0
