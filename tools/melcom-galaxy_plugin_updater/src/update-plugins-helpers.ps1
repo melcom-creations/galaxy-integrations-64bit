@@ -25,13 +25,28 @@ param(
     [string]$SecretFile,
     [string]$SecretType,
     [string]$TargetFile,
-    [string]$Lang
+    [string]$Lang,
+    [string]$LogDir,
+    [string]$Days
 )
 
 $ErrorActionPreference = "Stop"
 try { [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12 } catch {}
 
 function Get-Timestamp { Get-Date -Format "yyyyMMdd_HHmmss" }
+
+# Sends a file to the Windows Recycle Bin instead of deleting it permanently.
+# Used for the retention cleanup (old logs/backups) so a mistaken confirmation
+# is still recoverable, matching the caution the rest of this tool takes with
+# the user's data (backups before every update, confirmation before restore).
+Add-Type -AssemblyName Microsoft.VisualBasic
+function Remove-ItemToRecycleBin([string]$Path) {
+    [Microsoft.VisualBasic.FileIO.FileSystem]::DeleteFile(
+        $Path,
+        [Microsoft.VisualBasic.FileIO.UIOption]::OnlyErrorDialogs,
+        [Microsoft.VisualBasic.FileIO.RecycleOption]::SendToRecycleBin
+    )
+}
 
 function Clean([string]$s) {
     if ($null -eq $s) { return "" }
@@ -618,6 +633,81 @@ NOTIFIER_PATH = os.path.expandvars(r"%LOCALAPPDATA%\Programs\steamachievementnot
         Write-Host ""
         Write-Host ""
         Start-Sleep -Milliseconds 1000
+    }
+
+    # ---------------------------------------------------------
+    # Retention helpers for logs and backups. Each pair (Count.../Delete...)
+    # is deliberately separate so the batch file can ask the user once per
+    # category and only act on the category they agreed to. Age is based on
+    # LastWriteTime; nothing is deleted or even counted unless it is older
+    # than $Days.
+    # Output: COUNT|n  /  OK|nDeleted  /  ERROR|message
+    # ---------------------------------------------------------
+    "CountOldLogs" {
+        try {
+            if (-not (Test-Path -LiteralPath $LogDir)) { Write-Output "COUNT|0"; break }
+            $cutoff = (Get-Date).AddDays(-[double]$Days)
+            $old = Get-ChildItem -LiteralPath $LogDir -Filter "update_*.log" -File -ErrorAction SilentlyContinue |
+                Where-Object { $_.LastWriteTime -lt $cutoff }
+            Write-Output "COUNT|$($old.Count)"
+        } catch {
+            Write-Output "ERROR|$(Clean $_.Exception.Message)"
+        }
+    }
+
+    "DeleteOldLogs" {
+        try {
+            if (-not (Test-Path -LiteralPath $LogDir)) { Write-Output "OK|0"; break }
+            $cutoff = (Get-Date).AddDays(-[double]$Days)
+            $old = Get-ChildItem -LiteralPath $LogDir -Filter "update_*.log" -File -ErrorAction SilentlyContinue |
+                Where-Object { $_.LastWriteTime -lt $cutoff }
+            $n = 0
+            foreach ($f in $old) {
+                Remove-ItemToRecycleBin $f.FullName
+                Write-Output "DELETED|$($f.FullName)"
+                $n++
+            }
+            Write-Output "OK|$n"
+        } catch {
+            Write-Output "ERROR|$(Clean $_.Exception.Message)"
+        }
+    }
+
+    "CountOldBackups" {
+        try {
+            if (-not (Test-Path -LiteralPath $BackupDir)) { Write-Output "COUNT|0"; break }
+            $cutoff = (Get-Date).AddDays(-[double]$Days)
+            $old = Get-ChildItem -LiteralPath $BackupDir -Recurse -File -ErrorAction SilentlyContinue |
+                Where-Object { $_.LastWriteTime -lt $cutoff }
+            Write-Output "COUNT|$($old.Count)"
+        } catch {
+            Write-Output "ERROR|$(Clean $_.Exception.Message)"
+        }
+    }
+
+    "DeleteOldBackups" {
+        try {
+            if (-not (Test-Path -LiteralPath $BackupDir)) { Write-Output "OK|0"; break }
+            $cutoff = (Get-Date).AddDays(-[double]$Days)
+            $old = Get-ChildItem -LiteralPath $BackupDir -Recurse -File -ErrorAction SilentlyContinue |
+                Where-Object { $_.LastWriteTime -lt $cutoff }
+            $n = 0
+            foreach ($f in $old) {
+                Remove-ItemToRecycleBin $f.FullName
+                Write-Output "DELETED|$($f.FullName)"
+                $n++
+            }
+            # Remove now-empty per-plugin backup subfolders left behind. These are
+            # empty directories with nothing left to lose, so a plain removal
+            # (rather than a Recycle Bin round-trip) is fine here.
+            Get-ChildItem -LiteralPath $BackupDir -Recurse -Directory -ErrorAction SilentlyContinue |
+                Sort-Object { $_.FullName.Length } -Descending |
+                Where-Object { -not (Get-ChildItem -LiteralPath $_.FullName -Force -ErrorAction SilentlyContinue) } |
+                ForEach-Object { Remove-Item -LiteralPath $_.FullName -Force -ErrorAction SilentlyContinue }
+            Write-Output "OK|$n"
+        } catch {
+            Write-Output "ERROR|$(Clean $_.Exception.Message)"
+        }
     }
 
     default {

@@ -3,7 +3,7 @@ setlocal EnableDelayedExpansion
 chcp 65001 >nul
 
 rem =================================================================
-rem  update-plugins.bat  -  melcom GOG Galaxy v2.1+ Plugin Updater v0.1.2
+rem  update-plugins.bat  -  melcom GOG Galaxy v2.1+ Plugin Updater v0.1.3
 rem  Must stay in the same folder as: update-plugins-helpers.ps1
 rem =================================================================
 
@@ -29,6 +29,7 @@ set "PLUGINS_DIR=%LOCALAPPDATA%\GOG.com\Galaxy\plugins\installed"
 set "STEAM_PLUGIN_DIR=steam_ca27391f-2675-49b1-92c0-896d43afa4f8"
 set "BACKUP_DIR=%ROOT%backups"
 set "LOG_DIR=%ROOT%logs"
+set "RETENTION_DAYS=60"
 
 if not exist "%BACKUP_DIR%" mkdir "%BACKUP_DIR%" >nul 2>&1
 if not exist "%LOG_DIR%" mkdir "%LOG_DIR%" >nul 2>&1
@@ -37,11 +38,26 @@ rem  Scan files are transient batch/PowerShell interchange files. A forced
 rem  shutdown bypasses normal cleanup, so remove stale files before assigning
 rem  this run's timestamped name.
 if exist "%LOG_DIR%\_scan_*.tmp" del /q "%LOG_DIR%\_scan_*.tmp" >nul 2>&1
+if exist "%LOG_DIR%\_delold_*.tmp" del /q "%LOG_DIR%\_delold_*.tmp" >nul 2>&1
 
-for /f %%i in ('powershell -NoProfile -ExecutionPolicy Bypass -Command "Get-Date -Format yyyyMMdd_HHmmss"') do set "TS=%%i"
+rem ---------------------------------------------------------------
+rem  PowerShell resolution
+rem  Some systems have a PATH variable that is missing the Windows
+rem  System32 folder (broken PATH, restrictive policy, etc.), which
+rem  makes the bare "powershell" command fail with "is not recognized
+rem  as an internal or external command". Resolving the full path up
+rem  front avoids depending on PATH for the rest of this script.
+rem ---------------------------------------------------------------
+set "PWSH_EXE=%SystemRoot%\System32\WindowsPowerShell\v1.0\powershell.exe"
+if not exist "%PWSH_EXE%" set "PWSH_EXE=powershell"
+
+for /f %%i in ('%PWSH_EXE% -NoProfile -ExecutionPolicy Bypass -Command "Get-Date -Format yyyyMMdd_HHmmss"') do set "TS=%%i"
 set "LOGFILE=%LOG_DIR%\update_%TS%.log"
 set "SCANFILE=%LOG_DIR%\_scan_%TS%.tmp"
-type nul > "%LOGFILE%"
+rem  The log file is intentionally NOT pre-created here. :SAY appends to it
+rem  with ">>", which creates the file on first real write. This way exiting
+rem  immediately (e.g. [x] at the language menu, before anything is logged)
+rem  never leaves behind an empty 0-byte log file.
 
 if not exist "%PS1%" (
     echo %C_RED%[ERROR] update-plugins-helpers.ps1 not found next to this batch file.%C_RESET%
@@ -56,7 +72,7 @@ rem ---------------------------------------------------------------
 :LANG_SELECT
 cls
 echo %C_BOLD%%C_CYAN%============================================================%C_RESET%
-echo %C_BOLD%%C_CYAN%  melcom GOG Galaxy v2.1+ Plugin Updater v0.1.2%C_RESET%
+echo %C_BOLD%%C_CYAN%  melcom GOG Galaxy v2.1+ Plugin Updater v0.1.3%C_RESET%
 echo %C_BOLD%%C_CYAN%============================================================%C_RESET%
 echo.
 echo %C_GRAY%  Checks, updates, and installs melcom's GOG Galaxy 2.1+ integrations.%C_RESET%
@@ -86,7 +102,7 @@ goto LANG_DONE
 
 :EXIT_NOW
 if exist "%SCANFILE%" del /q "%SCANFILE%" >nul 2>&1
-powershell -NoProfile -ExecutionPolicy Bypass -File "%PS1%" -Action MatrixExit -Lang "%LANG%"
+%PWSH_EXE% -NoProfile -ExecutionPolicy Bypass -File "%PS1%" -Action MatrixExit -Lang "%LANG%"
 endlocal
 exit /b 0
 
@@ -100,7 +116,7 @@ rem ---------------------------------------------------------------
 rem  Text strings per language
 rem ---------------------------------------------------------------
 if "%LANG%"=="EN" (
-    set "MSG_TITLE=melcom GOG Galaxy v2.1+ Plugin Updater v0.1.2"
+    set "MSG_TITLE=melcom GOG Galaxy v2.1+ Plugin Updater v0.1.3"
     set "MSG_SCANNING=Scanning installed plugins ..."
     set "MSG_TABLE_HEAD=Folder / Status / Name"
     set "MSG_VALID=OK (melcom)"
@@ -190,8 +206,19 @@ if "%LANG%"=="EN" (
     set "MSG_PRESS_KEY=Press any key to exit ..."
     set "MSG_PLUGINSDIR_MISSING=Plugin folder not found:"
     set "MSG_PLUGINSDIR_CREATED=Plugin folder created:"
+    set "MSG_CLEANUP_TITLE=Housekeeping"
+    set "MSG_CLEANUP_INTRO=Checking for backups and logs older than %RETENTION_DAYS% days ..."
+    set "MSG_OLDLOGS_TITLE=Old log files"
+    set "MSG_OLDLOGS_Q=log file(s) older than %RETENTION_DAYS% days found. Delete them?"
+    set "MSG_OLDLOGS_DELETED=old log file(s) deleted."
+    set "MSG_OLDLOGS_FAIL=Could not delete old log files:"
+    set "MSG_OLDFILE_DELETED_LOG=Deleted:"
+    set "MSG_OLDBACKUPS_TITLE=Old backups"
+    set "MSG_OLDBACKUPS_Q=backup file(s) older than %RETENTION_DAYS% days found. Delete them?"
+    set "MSG_OLDBACKUPS_DELETED=old backup file(s) deleted."
+    set "MSG_OLDBACKUPS_FAIL=Could not delete old backups:"
 ) else (
-    set "MSG_TITLE=melcom GOG Galaxy v2.1+ Plugin Updater v0.1.2"
+    set "MSG_TITLE=melcom GOG Galaxy v2.1+ Plugin Updater v0.1.3"
     set "MSG_SCANNING=Installierte Plugins werden gescannt ..."
     set "MSG_TABLE_HEAD=Ordner / Status / Name"
     set "MSG_VALID=OK (melcom)"
@@ -281,6 +308,17 @@ if "%LANG%"=="EN" (
     set "MSG_PRESS_KEY=Beliebige Taste zum Beenden druecken ..."
     set "MSG_PLUGINSDIR_MISSING=Plugin-Ordner nicht gefunden:"
     set "MSG_PLUGINSDIR_CREATED=Plugin-Ordner erstellt:"
+    set "MSG_CLEANUP_TITLE=Aufraeumen"
+    set "MSG_CLEANUP_INTRO=Es wird geprueft, ob Sicherungen oder Logs aelter als %RETENTION_DAYS% Tage sind ..."
+    set "MSG_OLDLOGS_TITLE=Alte Logdateien"
+    set "MSG_OLDLOGS_Q=Logdatei(en) sind aelter als %RETENTION_DAYS% Tage. Loeschen?"
+    set "MSG_OLDLOGS_DELETED=alte Logdatei(en) geloescht."
+    set "MSG_OLDLOGS_FAIL=Alte Logdateien konnten nicht geloescht werden:"
+    set "MSG_OLDFILE_DELETED_LOG=Geloescht:"
+    set "MSG_OLDBACKUPS_TITLE=Alte Sicherungen"
+    set "MSG_OLDBACKUPS_Q=Sicherungsdatei(en) sind aelter als %RETENTION_DAYS% Tage. Loeschen?"
+    set "MSG_OLDBACKUPS_DELETED=alte Sicherungsdatei(en) geloescht."
+    set "MSG_OLDBACKUPS_FAIL=Alte Sicherungen konnten nicht geloescht werden:"
 )
 
 cls
@@ -288,6 +326,8 @@ call :SAY "%C_BOLD%%C_CYAN%" "==================================================
 call :SAY "%C_BOLD%%C_CYAN%" " %MSG_TITLE%"
 call :SAY "%C_BOLD%%C_CYAN%" "===================================================================="
 call :SAY "" ""
+
+call :CleanupOldFiles
 
 if not exist "%PLUGINS_DIR%" (
     mkdir "%PLUGINS_DIR%" >nul 2>&1
@@ -441,7 +481,7 @@ rem  arrays from current disk state. The post-install rescan is required because
 rem  the table and update loop consume these arrays rather than the filesystem.
 rem ===================================================================
 :ScanInstalledPlugins
-powershell -NoProfile -ExecutionPolicy Bypass -File "%PS1%" -Action ScanPlugins -PluginsDir "%PLUGINS_DIR%" > "%SCANFILE%"
+%PWSH_EXE% -NoProfile -ExecutionPolicy Bypass -File "%PS1%" -Action ScanPlugins -PluginsDir "%PLUGINS_DIR%" > "%SCANFILE%"
 set /a N=0
 for /f "usebackq tokens=1-9 delims=|" %%a in ("%SCANFILE%") do (
     set /a N+=1
@@ -460,7 +500,7 @@ goto :eof
 rem  Load the helper's pipe-delimited catalog into parallel CAT_* arrays.
 :LOAD_INSTALL_CATALOG
 set /a CATALOG_COUNT=0
-for /f "usebackq tokens=1-5 delims=|" %%a in (`powershell -NoProfile -ExecutionPolicy Bypass -File "%PS1%" -Action GetInstallCatalog`) do (
+for /f "usebackq tokens=1-5 delims=|" %%a in (`%PWSH_EXE% -NoProfile -ExecutionPolicy Bypass -File "%PS1%" -Action GetInstallCatalog`) do (
     set /a CATALOG_COUNT+=1
     set "CAT_DIR[!CATALOG_COUNT!]=%%a"
     set "CAT_NAME[!CATALOG_COUNT!]=%%b"
@@ -590,7 +630,7 @@ rem ===================================================================
 :SanCheckCurrentAndPrompt
 if /i not "%~1"=="%STEAM_PLUGIN_DIR%" goto :eof
 set "SANCHECK="
-for /f "usebackq delims=" %%R in (`powershell -NoProfile -ExecutionPolicy Bypass -File "%PS1%" -Action CheckSanMarker -PluginsDir "%PLUGINS_DIR%" -PluginDirName "%~1"`) do set "SANCHECK=%%R"
+for /f "usebackq delims=" %%R in (`%PWSH_EXE% -NoProfile -ExecutionPolicy Bypass -File "%PS1%" -Action CheckSanMarker -PluginsDir "%PLUGINS_DIR%" -PluginDirName "%~1"`) do set "SANCHECK=%%R"
 set "SAN_CURRENT_STATE=NOTPRESENT"
 for /f "tokens=1 delims=|" %%a in ("!SANCHECK!") do set "SAN_CURRENT_STATE=%%a"
 call :HandleSanIntegration "%~1" "!SAN_CURRENT_STATE!"
@@ -654,7 +694,7 @@ goto :eof
 
 :SAN_STRIP
 set "SANRESULT="
-for /f "usebackq delims=" %%R in (`powershell -NoProfile -ExecutionPolicy Bypass -File "%PS1%" -Action StripSanBlocks -PluginsDir "%PLUGINS_DIR%" -PluginDirName "!SAN_DN!"`) do set "SANRESULT=%%R"
+for /f "usebackq delims=" %%R in (`%PWSH_EXE% -NoProfile -ExecutionPolicy Bypass -File "%PS1%" -Action StripSanBlocks -PluginsDir "%PLUGINS_DIR%" -PluginDirName "!SAN_DN!"`) do set "SANRESULT=%%R"
 for /f "tokens=1,2 delims=|" %%a in ("!SANRESULT!") do (set "SAN_STATUS=%%a" & set "SAN_PATH=%%b")
 if "!SAN_STATUS!"=="OK" (
     call :SAY "%C_GREEN%" "  %MSG_SAN_REMOVED%"
@@ -665,7 +705,7 @@ goto :eof
 
 :SAN_INSERT
 set "SANRESULT="
-for /f "usebackq delims=" %%R in (`powershell -NoProfile -ExecutionPolicy Bypass -File "%PS1%" -Action InsertSanBlocks -PluginsDir "%PLUGINS_DIR%" -PluginDirName "!SAN_DN!"`) do set "SANRESULT=%%R"
+for /f "usebackq delims=" %%R in (`%PWSH_EXE% -NoProfile -ExecutionPolicy Bypass -File "%PS1%" -Action InsertSanBlocks -PluginsDir "%PLUGINS_DIR%" -PluginDirName "!SAN_DN!"`) do set "SANRESULT=%%R"
 for /f "tokens=1,2 delims=|" %%a in ("!SANRESULT!") do (set "SAN_STATUS=%%a" & set "SAN_PATH=%%b")
 if "!SAN_STATUS!"=="OK" (
     call :SAY "%C_GREEN%" "  %MSG_SAN_ADDED%"
@@ -674,6 +714,112 @@ if "!SAN_STATUS!"=="OK" (
 ) else (
     call :SAY "%C_RED%" "  %MSG_SAN_ADD_FAIL% !SAN_PATH!"
 )
+goto :eof
+
+rem ===================================================================
+rem  :CleanupOldFiles
+rem  Asks, once per run, whether to delete log files and backup files
+rem  older than RETENTION_DAYS. The two categories are checked and asked
+rem  about separately so the user can keep one and clear the other.
+rem  Nothing is asked if there is nothing old to delete.
+rem ===================================================================
+:CleanupOldFiles
+if defined CLEANUP_CHECKED goto :eof
+set "CLEANUP_CHECKED=1"
+
+set "OC_STATUS=" & set "OC_VALUE=0"
+for /f "usebackq delims=" %%R in (`%PWSH_EXE% -NoProfile -ExecutionPolicy Bypass -File "%PS1%" -Action CountOldLogs -LogDir "%LOG_DIR%" -Days "%RETENTION_DAYS%"`) do set "OLDLOGS_COUNT_RESULT=%%R"
+for /f "tokens=1,2 delims=|" %%a in ("!OLDLOGS_COUNT_RESULT!") do (set "OC_STATUS=%%a" & set "OC_VALUE=%%b")
+
+set "OB_STATUS=" & set "OB_VALUE=0"
+for /f "usebackq delims=" %%R in (`%PWSH_EXE% -NoProfile -ExecutionPolicy Bypass -File "%PS1%" -Action CountOldBackups -BackupDir "%BACKUP_DIR%" -Days "%RETENTION_DAYS%"`) do set "OLDBK_COUNT_RESULT=%%R"
+for /f "tokens=1,2 delims=|" %%a in ("!OLDBK_COUNT_RESULT!") do (set "OB_STATUS=%%a" & set "OB_VALUE=%%b")
+
+set "CLEANUP_HAS_OLD="
+if "!OC_STATUS!"=="COUNT" if !OC_VALUE! GTR 0 set "CLEANUP_HAS_OLD=1"
+if "!OB_STATUS!"=="COUNT" if !OB_VALUE! GTR 0 set "CLEANUP_HAS_OLD=1"
+
+if defined CLEANUP_HAS_OLD (
+    call :SAY "%C_BOLD%%C_YELLOW%" "----------------------------------------------------------------"
+    call :SAY "%C_BOLD%" "  %MSG_CLEANUP_TITLE%"
+    call :SAY "%C_GRAY%" "  %MSG_CLEANUP_INTRO%"
+    call :SAY "%C_BOLD%%C_YELLOW%" "----------------------------------------------------------------"
+    call :SAY "" ""
+)
+
+if "!OC_STATUS!"=="COUNT" if !OC_VALUE! GTR 0 (
+    call :AskYesNo DRAW_OLDLOGS_PROMPT
+    if /i "!ASKYN_RESULT!"=="Y" (
+        set "OLDLOGS_DEL_RESULT="
+        set "DELFILE=%LOG_DIR%\_delold_%TS%.tmp"
+        %PWSH_EXE% -NoProfile -ExecutionPolicy Bypass -File "%PS1%" -Action DeleteOldLogs -LogDir "%LOG_DIR%" -Days "%RETENTION_DAYS%" > "!DELFILE!"
+        set "DL_STATUS=" & set "DL_VALUE=0"
+        for /f "usebackq tokens=1,2 delims=|" %%a in ("!DELFILE!") do (
+            if /i "%%a"=="DELETED" (
+                >>"%LOGFILE%" echo(  %MSG_OLDFILE_DELETED_LOG% %%b
+            ) else (
+                set "DL_STATUS=%%a"
+                set "DL_VALUE=%%b"
+            )
+        )
+        if exist "!DELFILE!" del /q "!DELFILE!" >nul 2>&1
+        if "!DL_STATUS!"=="OK" (
+            call :SAY "%C_GREEN%" "  !DL_VALUE! %MSG_OLDLOGS_DELETED%"
+        ) else (
+            call :SAY "%C_RED%" "  %MSG_OLDLOGS_FAIL% !DL_VALUE!"
+        )
+        call :SAY "" ""
+    )
+)
+
+if "!OB_STATUS!"=="COUNT" if !OB_VALUE! GTR 0 (
+    call :AskYesNo DRAW_OLDBACKUPS_PROMPT
+    if /i "!ASKYN_RESULT!"=="Y" (
+        set "OLDBK_DEL_RESULT="
+        set "DELFILE=%LOG_DIR%\_delold_%TS%.tmp"
+        %PWSH_EXE% -NoProfile -ExecutionPolicy Bypass -File "%PS1%" -Action DeleteOldBackups -BackupDir "%BACKUP_DIR%" -Days "%RETENTION_DAYS%" > "!DELFILE!"
+        set "DB_STATUS=" & set "DB_VALUE=0"
+        for /f "usebackq tokens=1,2 delims=|" %%a in ("!DELFILE!") do (
+            if /i "%%a"=="DELETED" (
+                >>"%LOGFILE%" echo(  %MSG_OLDFILE_DELETED_LOG% %%b
+            ) else (
+                set "DB_STATUS=%%a"
+                set "DB_VALUE=%%b"
+            )
+        )
+        if exist "!DELFILE!" del /q "!DELFILE!" >nul 2>&1
+        if "!DB_STATUS!"=="OK" (
+            call :SAY "%C_GREEN%" "  !DB_VALUE! %MSG_OLDBACKUPS_DELETED%"
+        ) else (
+            call :SAY "%C_RED%" "  %MSG_OLDBACKUPS_FAIL% !DB_VALUE!"
+        )
+        call :SAY "" ""
+    )
+)
+goto :eof
+
+rem ===================================================================
+rem  :DRAW_OLDLOGS_PROMPT <printroutine>  -  draws the old-logs cleanup
+rem  question. OC_VALUE holds the count found by :CleanupOldFiles.
+rem ===================================================================
+:DRAW_OLDLOGS_PROMPT
+call :%~1 "" ""
+call :%~1 "%C_BOLD%%C_YELLOW%" "----------------------------------------------------------------"
+call :%~1 "%C_BOLD%" "  %MSG_OLDLOGS_TITLE%"
+call :%~1 "%C_YELLOW%" "  !OC_VALUE! %MSG_OLDLOGS_Q%"
+call :%~1 "" ""
+goto :eof
+
+rem ===================================================================
+rem  :DRAW_OLDBACKUPS_PROMPT <printroutine>  -  draws the old-backups
+rem  cleanup question. OB_VALUE holds the count found by :CleanupOldFiles.
+rem ===================================================================
+:DRAW_OLDBACKUPS_PROMPT
+call :%~1 "" ""
+call :%~1 "%C_BOLD%%C_YELLOW%" "----------------------------------------------------------------"
+call :%~1 "%C_BOLD%" "  %MSG_OLDBACKUPS_TITLE%"
+call :%~1 "%C_YELLOW%" "  !OB_VALUE! %MSG_OLDBACKUPS_Q%"
+call :%~1 "" ""
 goto :eof
 
 rem ===================================================================
@@ -758,7 +904,7 @@ if exist "%PLUGINS_DIR%\!DN!" (
 
 call :SAY "%C_CYAN%" "  %MSG_INSTALLING%"
 set "RESULT="
-for /f "usebackq delims=" %%R in (`powershell -NoProfile -ExecutionPolicy Bypass -File "%PS1%" -Action CheckUpdate -Repo "!RP!" -LatestApi "!API!" -AssetPattern "!PAT!" -LocalVersion "0"`) do set "RESULT=%%R"
+for /f "usebackq delims=" %%R in (`%PWSH_EXE% -NoProfile -ExecutionPolicy Bypass -File "%PS1%" -Action CheckUpdate -Repo "!RP!" -LatestApi "!API!" -AssetPattern "!PAT!" -LocalVersion "0"`) do set "RESULT=%%R"
 for /f "tokens=1-3 delims=|" %%a in ("!RESULT!") do (
     set "U_STATUS=%%a"
     set "U_TAG=%%b"
@@ -771,7 +917,7 @@ if "!U_STATUS!"=="ERROR" (
 )
 
 set "IRESULT="
-for /f "usebackq delims=" %%R in (`powershell -NoProfile -ExecutionPolicy Bypass -File "%PS1%" -Action DoUpdate -PluginsDir "%PLUGINS_DIR%" -PluginDirName "!DN!" -DownloadUrl "!U_URL!"`) do set "IRESULT=%%R"
+for /f "usebackq delims=" %%R in (`%PWSH_EXE% -NoProfile -ExecutionPolicy Bypass -File "%PS1%" -Action DoUpdate -PluginsDir "%PLUGINS_DIR%" -PluginDirName "!DN!" -DownloadUrl "!U_URL!"`) do set "IRESULT=%%R"
 for /f "tokens=1,2 delims=|" %%a in ("!IRESULT!") do (set "I_STATUS=%%a" & set "I_PATH=%%b")
 
 if not "!I_STATUS!"=="OK" (
@@ -806,7 +952,7 @@ rem  whose behavior can vary when input is redirected in batch environments.
 ping -n 2 127.0.0.1 >nul
 
 set "RESULT="
-for /f "usebackq delims=" %%R in (`powershell -NoProfile -ExecutionPolicy Bypass -File "%PS1%" -Action CheckUpdate -Repo "!RP!" -LatestApi "!API!" -AssetPattern "!PAT!" -LocalVersion "!LV!"`) do set "RESULT=%%R"
+for /f "usebackq delims=" %%R in (`%PWSH_EXE% -NoProfile -ExecutionPolicy Bypass -File "%PS1%" -Action CheckUpdate -Repo "!RP!" -LatestApi "!API!" -AssetPattern "!PAT!" -LocalVersion "!LV!"`) do set "RESULT=%%R"
 
 for /f "tokens=1-3 delims=|" %%a in ("!RESULT!") do (
     set "U_STATUS=%%a"
@@ -834,14 +980,14 @@ call :SAY "%C_YELLOW%" "  %MSG_UPDATE_FOUND% !U_TAG!"
 set "SAN_OLDSTATE=NOTPRESENT"
 if /i "!DN!"=="%STEAM_PLUGIN_DIR%" (
     set "SANCHECK="
-    for /f "usebackq delims=" %%R in (`powershell -NoProfile -ExecutionPolicy Bypass -File "%PS1%" -Action CheckSanMarker -PluginsDir "%PLUGINS_DIR%" -PluginDirName "!DN!"`) do set "SANCHECK=%%R"
+    for /f "usebackq delims=" %%R in (`%PWSH_EXE% -NoProfile -ExecutionPolicy Bypass -File "%PS1%" -Action CheckSanMarker -PluginsDir "%PLUGINS_DIR%" -PluginDirName "!DN!"`) do set "SANCHECK=%%R"
     for /f "tokens=1 delims=|" %%a in ("!SANCHECK!") do set "SAN_OLDSTATE=%%a"
 )
 
 rem  The full backup is the safety gate: never overwrite a plugin if it fails.
 call :SAY "%C_CYAN%" "  %MSG_BACKUP_START%"
 set "BRESULT="
-for /f "usebackq delims=" %%R in (`powershell -NoProfile -ExecutionPolicy Bypass -File "%PS1%" -Action BackupPlugin -PluginsDir "%PLUGINS_DIR%" -BackupDir "%BACKUP_DIR%" -PluginDirName "!DN!"`) do set "BRESULT=%%R"
+for /f "usebackq delims=" %%R in (`%PWSH_EXE% -NoProfile -ExecutionPolicy Bypass -File "%PS1%" -Action BackupPlugin -PluginsDir "%PLUGINS_DIR%" -BackupDir "%BACKUP_DIR%" -PluginDirName "!DN!"`) do set "BRESULT=%%R"
 for /f "tokens=1,2 delims=|" %%a in ("!BRESULT!") do (set "B_STATUS=%%a" & set "B_PATH=%%b")
 
 if not "!B_STATUS!"=="OK" (
@@ -866,14 +1012,14 @@ if /i "!DN!"=="itch_2df02142-4d8a-4a4b-9b6e-c3a0bc62f93b" (
 set "SECRET_BACKUP_PATH="
 if defined SECRET_TYPE (
     set "CRESULT="
-    for /f "usebackq delims=" %%R in (`powershell -NoProfile -ExecutionPolicy Bypass -File "%PS1%" -Action CheckSecret -PluginsDir "%PLUGINS_DIR%" -PluginDirName "!DN!" -SecretFile "!SECRET_FILE!" -SecretType "!SECRET_TYPE!"`) do set "CRESULT=%%R"
+    for /f "usebackq delims=" %%R in (`%PWSH_EXE% -NoProfile -ExecutionPolicy Bypass -File "%PS1%" -Action CheckSecret -PluginsDir "%PLUGINS_DIR%" -PluginDirName "!DN!" -SecretFile "!SECRET_FILE!" -SecretType "!SECRET_TYPE!"`) do set "CRESULT=%%R"
     for /f "tokens=1,2 delims=|" %%a in ("!CRESULT!") do (set "C_STATUS=%%a" & set "C_PATH=%%b")
 
     if "!C_STATUS!"=="PRESENT" (
         call :AskYesNo DRAW_SECRET_BACKUP_PROMPT
         if /i "!ASKYN_RESULT!"=="Y" (
             set "SRESULT="
-            for /f "usebackq delims=" %%R in (`powershell -NoProfile -ExecutionPolicy Bypass -File "%PS1%" -Action BackupSecret -PluginsDir "%PLUGINS_DIR%" -BackupDir "%BACKUP_DIR%" -PluginDirName "!DN!" -SecretFile "!SECRET_FILE!"`) do set "SRESULT=%%R"
+            for /f "usebackq delims=" %%R in (`%PWSH_EXE% -NoProfile -ExecutionPolicy Bypass -File "%PS1%" -Action BackupSecret -PluginsDir "%PLUGINS_DIR%" -BackupDir "%BACKUP_DIR%" -PluginDirName "!DN!" -SecretFile "!SECRET_FILE!"`) do set "SRESULT=%%R"
             for /f "tokens=1,2 delims=|" %%a in ("!SRESULT!") do (set "S_STATUS=%%a" & set "S_PATH=%%b")
 
             if "!S_STATUS!"=="OK" (
@@ -892,7 +1038,7 @@ if defined SECRET_TYPE (
 rem --- Download and install the update ---
 call :SAY "%C_CYAN%" "  %MSG_DOWNLOADING%"
 set "URESULT="
-for /f "usebackq delims=" %%R in (`powershell -NoProfile -ExecutionPolicy Bypass -File "%PS1%" -Action DoUpdate -PluginsDir "%PLUGINS_DIR%" -PluginDirName "!DN!" -DownloadUrl "!U_URL!"`) do set "URESULT=%%R"
+for /f "usebackq delims=" %%R in (`%PWSH_EXE% -NoProfile -ExecutionPolicy Bypass -File "%PS1%" -Action DoUpdate -PluginsDir "%PLUGINS_DIR%" -PluginDirName "!DN!" -DownloadUrl "!U_URL!"`) do set "URESULT=%%R"
 for /f "tokens=1,2 delims=|" %%a in ("!URESULT!") do (set "UP_STATUS=%%a" & set "UP_PATH=%%b")
 
 if not "!UP_STATUS!"=="OK" (
@@ -907,7 +1053,7 @@ if defined SECRET_BACKUP_PATH (
     call :AskYesNo DRAW_RESTORE_PROMPT
     if /i "!ASKYN_RESULT!"=="Y" (
         set "RRESULT="
-        for /f "usebackq delims=" %%R in (`powershell -NoProfile -ExecutionPolicy Bypass -File "%PS1%" -Action RestoreSecret -PluginsDir "%PLUGINS_DIR%" -PluginDirName "!DN!" -SecretFile "!SECRET_BACKUP_PATH!" -TargetFile "!SECRET_FILE!"`) do set "RRESULT=%%R"
+        for /f "usebackq delims=" %%R in (`%PWSH_EXE% -NoProfile -ExecutionPolicy Bypass -File "%PS1%" -Action RestoreSecret -PluginsDir "%PLUGINS_DIR%" -PluginDirName "!DN!" -SecretFile "!SECRET_BACKUP_PATH!" -TargetFile "!SECRET_FILE!"`) do set "RRESULT=%%R"
         for /f "tokens=1,2 delims=|" %%a in ("!RRESULT!") do (set "R_STATUS=%%a" & set "R_PATH=%%b")
         if "!R_STATUS!"=="OK" (
             call :SAY "%C_GREEN%" "    %MSG_RESTORE_OK%"
@@ -940,7 +1086,7 @@ if exist "%SCANFILE%" del /q "%SCANFILE%" >nul 2>&1
 echo.
 echo %MSG_PRESS_KEY%
 pause >nul
-powershell -NoProfile -ExecutionPolicy Bypass -File "%PS1%" -Action MatrixExit -Lang "%LANG%"
+%PWSH_EXE% -NoProfile -ExecutionPolicy Bypass -File "%PS1%" -Action MatrixExit -Lang "%LANG%"
 endlocal
 exit /b 0
 
