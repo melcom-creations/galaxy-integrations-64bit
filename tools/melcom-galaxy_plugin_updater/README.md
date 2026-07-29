@@ -1,4 +1,4 @@
-# melcom GOG Galaxy v2.1+ Plugin Updater v0.1.2
+# melcom GOG Galaxy v2.1+ Plugin Updater v0.1.3
 
 A colorized Windows command-line tool that keeps your melcom GOG Galaxy 2.1+ integrations up to date.
 
@@ -48,6 +48,8 @@ Older melcom integrations with incomplete manifest data are marked separately. T
 The updater checks your installed supported plugins, skips plugins that are already current, and creates a complete ZIP backup before installing an available update. First-time installations do not overwrite existing plugin folders.
 
 Backups and logs are created next to `update-plugins.bat` and `update-plugins-helpers.ps1`, in the `backups` and `logs` folders.
+
+On startup, the tool checks separately whether any logs or any backups are older than 60 days and, if so, asks once per category whether to delete them. Logs and backups are asked about independently, so you can clear one and keep the other. Nothing is deleted without confirmation, and nothing is asked if there is nothing old to delete.
 
 ---
 

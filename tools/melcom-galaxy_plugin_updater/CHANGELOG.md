@@ -4,6 +4,18 @@ All notable changes to this project will be documented in this file.
 
 ---
 
+## Version 0.1.3
+
+### Added in Version 0.1.3
+
+- **Optional cleanup of old logs and backups:** On startup, the tool checks separately whether any log files or any backup files are older than 60 days. If either is the case, a short explanation is shown first, then it asks once per category (logs and backups are asked about independently, so either can be kept while the other is cleared) whether to delete them. Nothing is shown or asked if there is nothing old to delete, and nothing is deleted without confirmation. Deleted files go to the Windows Recycle Bin rather than being removed permanently, and every deleted file's full path is written to the log (the on-screen summary still only shows a count, to keep the console output short).
+
+### Fixed in Version 0.1.3
+
+- **Tool failed with "'powershell' is not recognized as an internal or external command":** On systems where the PATH environment variable does not include the Windows System32 folder (broken PATH, restrictive policy, etc.), every PowerShell call in the tool failed immediately, most visibly during the initial plugin scan, so no plugins were ever detected. The tool now resolves the full path to `powershell.exe` directly instead of relying on PATH, so it no longer depends on PowerShell being reachable through the PATH variable. The resolved path is used unquoted at each call site (it never contains spaces) to avoid a `cmd.exe` quirk where a `for /f` command that both starts and ends with a quote gets its outer quotes stripped, which would otherwise corrupt the command and break every update check and backup.
+
+---
+
 ## Version 0.1.2
 
 ### Added in Version 0.1.2
