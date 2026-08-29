@@ -26,7 +26,9 @@ These integrations require the native 64-bit version of GOG Galaxy 2.1 or later.
 | **Legacy Games** | **pippo-san** | ✅ Released | ❌ | ✅ | [Download](https://github.com/pippo-san/galaxy-integration-legacy-games) |
 
 > [!IMPORTANT]
-> This page primarily covers 64-bit integrations maintained by **melcom**. Developers who want their own plugin listed here must contact me directly; only actively maintained plugins whose developers support their users will be added.
+> For questions or problems, contact the maintainer listed for the affected integration.
+>
+> Developers who want their own plugin listed here must contact me directly. I only add plugins that are actively maintained and whose developers support their users.
 
 ✅ Supported · ❌ Not supported · ⏳ Planned or in development
 
