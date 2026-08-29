@@ -28,7 +28,7 @@ These integrations require the native 64-bit version of GOG Galaxy 2.1 or later.
 > [!IMPORTANT]
 > For questions or problems, contact the maintainer listed for the affected integration.
 >
-> Developers who want their own plugin listed here must contact me directly. I only add plugins that are actively maintained and whose developers support their users.
+> Developers who want their own plugin listed here must [contact me](https://github.com/melcom-creations/galaxy-integrations-64bit#-support--feedback) directly. I only add plugins that are actively maintained and whose developers support their users.
 
 ✅ Supported · ❌ Not supported · ⏳ Planned or in development
 
