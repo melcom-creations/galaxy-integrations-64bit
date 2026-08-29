@@ -2,6 +2,11 @@
 
 This repository provides a central overview of community integrations compatible with GOG Galaxy 2.1+ 64-bit. Each integration remains in its own repository and is linked in the table below.
 
+> [!IMPORTANT]
+> **Third-party integrations:** Third-party 64-bit integrations are added to this page only when their developer contacts me directly and requests inclusion. To be listed, the developer must actively maintain the integration and remain available to support their community when questions or problems arise.
+>
+> This repository is an overview, not a central support hub. Each integration remains the responsibility of the maintainer listed in the table. All installation, maintenance-tool, troubleshooting, log-creation, and contact instructions on this page apply exclusively to integrations maintained by **melcom**. For third-party integrations, follow the instructions in the linked repository and contact its maintainer.
+
 ---
 
 ## 🔄 Get the 64-bit GOG Galaxy Client
@@ -24,11 +29,6 @@ These integrations require the native 64-bit version of GOG Galaxy 2.1 or later.
 | **Rockstar Games** | **melcom** | ✅ Released | ✅ | ✅ | [Download](https://github.com/melcom-creations/galaxy-integration-rockstar) |
 | **IndieGala** | **melcom** | ⏳ In Progress (Qt6 issue) | ❌ | ⏳ | ⏳ |
 | **Legacy Games** | **pippo-san** | ✅ Released | ❌ | ✅ | [Download](https://github.com/pippo-san/galaxy-integration-legacy-games) |
-
-> [!IMPORTANT]
-> This repository is an overview, not a central support hub. Each integration remains the responsibility of the maintainer listed in the table.
->
-> All installation, maintenance-tool, troubleshooting, log-creation, and contact instructions below apply exclusively to integrations maintained by **melcom**. For third-party integrations, follow the instructions in the linked repository and contact its maintainer.
 
 ✅ Supported · ❌ Not supported · ⏳ Planned or in development
 
