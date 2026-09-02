@@ -22,7 +22,7 @@ These integrations require the native 64-bit version of GOG Galaxy 2.1 or later.
 | **Ubisoft Connect** | **melcom** | ✅ Released | ❌ | ✅ | [Download](https://github.com/melcom-creations/galaxy-integration-uplay) |
 | **EA app** | **melcom** | ✅ Released | ✅ | ✅ | [Download](https://github.com/melcom-creations/galaxy-integration-ea) |
 | **Rockstar Games** | **melcom** | ✅ Released | ✅ | ✅ | [Download](https://github.com/melcom-creations/galaxy-integration-rockstar) |
-| **IndieGala** | **melcom** | ⏳  | ❌ | ⏳ | very soon... |
+| **IndieGala** | **melcom** | ⏳  | ❌ | ✅ | very soon... |
 | **Legacy Games** | **pippo-san** | ✅ Released | ❌ | ✅ | [Download](https://github.com/pippo-san/galaxy-integration-legacy-games) |
 
 > [!IMPORTANT]
