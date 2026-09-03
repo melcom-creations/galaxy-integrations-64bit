@@ -22,6 +22,8 @@ param(
     [string]$AssetPattern,
     [string]$LocalVersion,
     [string]$DownloadUrl,
+    [string]$ExpectedRepo,
+    [string]$ExpectedVersion,
     [string]$SecretFile,
     [string]$SecretType,
     [string]$TargetFile,
@@ -81,6 +83,7 @@ switch ($Action) {
             @("amazon_c2cd2e29-8b02-35a9-86fc-3faf90255857", "Amazon Games Plugin", "melcom-creations/galaxy-integration-amazon"),
             @("battlenet_ba170431-0649-482f-863b-d248592f1842", "Battle.net Plugin", "melcom-creations/galaxy-integration-battlenet"),
             @("humble_f0ca3d80-a432-4d35-a9e3-60f27161ac3a", "Humble Bundle Plugin", "melcom-creations/galaxy-integration-humble"),
+            @("indiegala_a1a85742-f3e0-42ae-bde9-64ab7d0321cf", "IndieGala Plugin", "melcom-creations/galaxy-integration-indiegala"),
             @("itch_2df02142-4d8a-4a4b-9b6e-c3a0bc62f93b", "itch.io Plugin", "melcom-creations/galaxy-integration-itch"),
             @("origin_7f53219b-4e2b-4591-9f4f-dfc5f4ba9eb0", "EA app Plugin", "melcom-creations/galaxy-integration-ea"),
             @("rockstar_774732b5-69c4-405c-b6c9-92cd55740cfe", "Rockstar Games Plugin", "melcom-creations/galaxy-integration-rockstar"),
@@ -91,6 +94,29 @@ switch ($Action) {
         foreach ($item in $catalog) {
             $repo = $item[2]
             Write-Output "$($item[0])|$($item[1])|$repo|https://api.github.com/repos/$repo/releases/latest|*-64bit.zip"
+        }
+    }
+
+    # ---------------------------------------------------------
+    # Detects the interactive Galaxy processes that can keep plugin files loaded.
+    # GalaxyClientService is deliberately excluded because the Windows service can
+    # remain active after the client and tray application have been closed.
+    # Output: RUNNING|names  /  STOPPED|
+    # ---------------------------------------------------------
+    "CheckGalaxyRunning" {
+        try {
+            $clientProcessNames = @("GalaxyClient", "GalaxyClient Helper", "GalaxyCommunication")
+            $running = Get-Process -ErrorAction SilentlyContinue |
+                Where-Object { $clientProcessNames -contains $_.ProcessName } |
+                Select-Object -ExpandProperty ProcessName -Unique
+
+            if ($running) {
+                Write-Output "RUNNING|$(Clean ($running -join ', '))"
+            } else {
+                Write-Output "STOPPED|"
+            }
+        } catch {
+            Write-Output "ERROR|$(Clean $_.Exception.Message)"
         }
     }
 
@@ -282,21 +308,28 @@ NOTIFIER_PATH = os.path.expandvars(r"%LOCALAPPDATA%\Programs\steamachievementnot
                 continue
             }
 
-            $author = "$($m.author)"
-            $url    = "$($m.url)"
-            $valid  = 0
-            if ($author -match "(?i)melcom") {
-                $valid = 2
-                if ($url -match [regex]::Escape("https://github.com/melcom-creations")) {
-                    $valid = 1
-                }
-            }
-
             $repo = ""; $api = ""; $pattern = ""
             if ($m.external_updater) {
                 $repo    = "$($m.external_updater.repo)"
                 $api     = "$($m.external_updater.latest_release_api)"
                 $pattern = "$($m.external_updater.asset_pattern)"
+            }
+
+            $author = "$($m.author)"
+            $url    = "$($m.url)".TrimEnd('/')
+            $valid  = 0
+            if ($author -match "(?i)melcom") {
+                $valid = 2
+                $urlMatch = [regex]::Match($url, '^https://github\.com/(melcom-creations/[^/]+)$', 'IgnoreCase')
+                if ($urlMatch.Success) {
+                    $urlRepo = $urlMatch.Groups[1].Value
+                    $expectedApi = "https://api.github.com/repos/$urlRepo/releases/latest"
+                    if ($repo -ieq $urlRepo -and $api -ieq $expectedApi -and -not [string]::IsNullOrWhiteSpace($pattern)) {
+                        $repo = $urlRepo
+                        $api = $expectedApi
+                        $valid = 1
+                    }
+                }
             }
 
             $name     = Clean "$($m.name)"
@@ -315,6 +348,16 @@ NOTIFIER_PATH = os.path.expandvars(r"%LOCALAPPDATA%\Programs\steamachievementnot
     # ---------------------------------------------------------
     "CheckUpdate" {
         try {
+            if ($Repo -notmatch '^melcom-creations/[A-Za-z0-9_.-]+$') {
+                Write-Output "ERROR|UNTRUSTED_REPOSITORY"
+                break
+            }
+            $trustedLatestApi = "https://api.github.com/repos/$Repo/releases/latest"
+            if ($LatestApi -ine $trustedLatestApi) {
+                Write-Output "ERROR|UNTRUSTED_RELEASE_API"
+                break
+            }
+
             $headers = @{ "User-Agent" = "melcom-galaxy-updater"; "Accept" = "application/vnd.github+json" }
             # Use an existing token opportunistically; credentials are never read
             # from or written to disk by this helper.
@@ -337,8 +380,9 @@ NOTIFIER_PATH = os.path.expandvars(r"%LOCALAPPDATA%\Programs\steamachievementnot
                     # the compatibility fallback; its first item is newest.
                     $listUrl = "https://api.github.com/repos/$Repo/releases"
                     $list = Invoke-RestMethod -Uri $listUrl -Headers $headers -Method Get
-                    if ($list -and $list.Count -gt 0) {
-                        $rel = $list | Select-Object -First 1
+                    $stableReleases = $list | Where-Object { -not $_.draft -and -not $_.prerelease }
+                    if ($stableReleases -and $stableReleases.Count -gt 0) {
+                        $rel = $stableReleases | Select-Object -First 1
                     } else {
                         Write-Output "ERROR|NO_RELEASES_FOUND"
                         break
@@ -502,16 +546,30 @@ NOTIFIER_PATH = os.path.expandvars(r"%LOCALAPPDATA%\Programs\steamachievementnot
     }
 
     # ---------------------------------------------------------
-    # Download and extract into unique temporary paths, then replace the installed
-    # directory contents. Archives may contain either files at their root or one
-    # wrapper directory; normalize both layouts before copying. The caller must
-    # create a backup first because replacement is intentionally not transactional.
+    # Download and extract into unique temporary paths, then validate the archive's
+    # manifest before touching the installed plugin. A fully prepared directory is
+    # swapped into place only after validation; an existing plugin is moved aside
+    # temporarily and restored automatically if the final replacement fails.
     # ---------------------------------------------------------
     "DoUpdate" {
         $pluginDir = Join-Path $PluginsDir $PluginDirName
         $tempDir   = Join-Path $env:TEMP ("galaxy_update_" + [guid]::NewGuid().ToString("N"))
         $tempZip   = Join-Path $env:TEMP ("galaxy_update_" + [guid]::NewGuid().ToString("N") + ".zip")
+        $preparedDir = Join-Path $env:TEMP ("galaxy_prepared_" + [guid]::NewGuid().ToString("N"))
+        $rollbackDir = Join-Path $env:TEMP ("galaxy_rollback_" + [guid]::NewGuid().ToString("N"))
+        $originalMoved = $false
         try {
+            if ($ExpectedRepo -notmatch '^melcom-creations/[A-Za-z0-9_.-]+$') {
+                throw "UNTRUSTED_REPOSITORY"
+            }
+            $trustedDownloadPrefix = "https://github.com/$ExpectedRepo/releases/download/"
+            if (-not $DownloadUrl.StartsWith($trustedDownloadPrefix, [StringComparison]::OrdinalIgnoreCase)) {
+                throw "UNTRUSTED_DOWNLOAD_URL"
+            }
+            if ([string]::IsNullOrWhiteSpace($ExpectedVersion)) {
+                throw "EXPECTED_VERSION_MISSING"
+            }
+
             Invoke-WebRequest -Uri $DownloadUrl -OutFile $tempZip -Headers @{ "User-Agent" = "melcom-galaxy-updater" }
             New-Item -ItemType Directory -Path $tempDir | Out-Null
             Expand-Archive -LiteralPath $tempZip -DestinationPath $tempDir -Force
@@ -522,19 +580,78 @@ NOTIFIER_PATH = os.path.expandvars(r"%LOCALAPPDATA%\Programs\steamachievementnot
                 $sourceRoot = $items[0].FullName
             }
 
-            if (-not (Test-Path -LiteralPath $pluginDir)) {
-                New-Item -ItemType Directory -Path $pluginDir | Out-Null
-            } else {
-                Get-ChildItem -LiteralPath $pluginDir -Force | Remove-Item -Recurse -Force
+            $manifestPath = Join-Path $sourceRoot "manifest.json"
+            if (-not (Test-Path -LiteralPath $manifestPath -PathType Leaf)) {
+                throw "ARCHIVE_MANIFEST_MISSING"
             }
-            Copy-Item -Path (Join-Path $sourceRoot "*") -Destination $pluginDir -Recurse -Force
+            try {
+                $manifest = Get-Content -Raw -LiteralPath $manifestPath -Encoding UTF8 | ConvertFrom-Json
+            } catch {
+                throw "ARCHIVE_MANIFEST_INVALID"
+            }
+
+            $nameSeparator = $PluginDirName.IndexOf('_')
+            if ($nameSeparator -lt 1 -or $nameSeparator -eq ($PluginDirName.Length - 1)) {
+                throw "PLUGIN_DIRECTORY_NAME_INVALID"
+            }
+            $expectedGuid = $PluginDirName.Substring($nameSeparator + 1)
+            if ("$($manifest.guid)" -ine $expectedGuid) {
+                throw "ARCHIVE_GUID_MISMATCH"
+            }
+            if ("$($manifest.external_updater.repo)" -ine $ExpectedRepo) {
+                throw "ARCHIVE_REPOSITORY_MISMATCH"
+            }
+            $expectedProjectUrl = "https://github.com/$ExpectedRepo"
+            if ("$($manifest.url)".TrimEnd('/') -ine $expectedProjectUrl) {
+                throw "ARCHIVE_PROJECT_URL_MISMATCH"
+            }
+
+            $archiveVersion = ("$($manifest.version)" -replace '-64bit$', '') -replace '^[vV]', ''
+            $releaseVersion = ($ExpectedVersion -replace '-64bit$', '') -replace '^[vV]', ''
+            $versionComparison = Compare-VersionStrings $archiveVersion $releaseVersion
+            if ($null -eq $versionComparison -or $versionComparison -ne 0) {
+                throw "ARCHIVE_VERSION_MISMATCH"
+            }
+
+            $scriptName = "$($manifest.script)"
+            if ([string]::IsNullOrWhiteSpace($scriptName) -or (Split-Path $scriptName -Leaf) -ne $scriptName) {
+                throw "ARCHIVE_SCRIPT_INVALID"
+            }
+            if (-not (Test-Path -LiteralPath (Join-Path $sourceRoot $scriptName) -PathType Leaf)) {
+                throw "ARCHIVE_SCRIPT_MISSING"
+            }
+
+            New-Item -ItemType Directory -Path $preparedDir | Out-Null
+            foreach ($item in (Get-ChildItem -LiteralPath $sourceRoot -Force)) {
+                Copy-Item -LiteralPath $item.FullName -Destination $preparedDir -Recurse -Force
+            }
+
+            if (Test-Path -LiteralPath $pluginDir) {
+                Move-Item -LiteralPath $pluginDir -Destination $rollbackDir
+                $originalMoved = $true
+            }
+            Move-Item -LiteralPath $preparedDir -Destination $pluginDir
+
+            if ($originalMoved -and (Test-Path -LiteralPath $rollbackDir)) {
+                Remove-Item -LiteralPath $rollbackDir -Recurse -Force -ErrorAction SilentlyContinue
+            }
 
             Write-Output "OK|$pluginDir"
         } catch {
-            Write-Output "ERROR|$(Clean $_.Exception.Message)"
+            $failure = Clean $_.Exception.Message
+            if ($originalMoved -and -not (Test-Path -LiteralPath $pluginDir) -and (Test-Path -LiteralPath $rollbackDir)) {
+                try {
+                    Move-Item -LiteralPath $rollbackDir -Destination $pluginDir
+                    $originalMoved = $false
+                } catch {
+                    $failure = "$failure; ROLLBACK_FAILED: $(Clean $_.Exception.Message); RECOVERY_COPY: $rollbackDir"
+                }
+            }
+            Write-Output "ERROR|$failure"
         } finally {
             if (Test-Path -LiteralPath $tempZip) { Remove-Item -LiteralPath $tempZip -Force -ErrorAction SilentlyContinue }
             if (Test-Path -LiteralPath $tempDir) { Remove-Item -LiteralPath $tempDir -Recurse -Force -ErrorAction SilentlyContinue }
+            if (Test-Path -LiteralPath $preparedDir) { Remove-Item -LiteralPath $preparedDir -Recurse -Force -ErrorAction SilentlyContinue }
         }
     }
 

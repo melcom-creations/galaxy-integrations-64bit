@@ -3,7 +3,7 @@ setlocal EnableDelayedExpansion
 chcp 65001 >nul
 
 rem =================================================================
-rem  update-plugins.bat  -  melcom GOG Galaxy v2.1+ Plugin Updater v0.1.3
+rem  update-plugins.bat  -  melcom GOG Galaxy v2.1+ Plugin Updater v0.1.4
 rem  Must stay in the same folder as: update-plugins-helpers.ps1
 rem =================================================================
 
@@ -72,7 +72,7 @@ rem ---------------------------------------------------------------
 :LANG_SELECT
 cls
 echo %C_BOLD%%C_CYAN%============================================================%C_RESET%
-echo %C_BOLD%%C_CYAN%  melcom GOG Galaxy v2.1+ Plugin Updater v0.1.3%C_RESET%
+echo %C_BOLD%%C_CYAN%  melcom GOG Galaxy v2.1+ Plugin Updater v0.1.4%C_RESET%
 echo %C_BOLD%%C_CYAN%============================================================%C_RESET%
 echo.
 echo %C_GRAY%  Checks, updates, and installs melcom's GOG Galaxy 2.1+ integrations.%C_RESET%
@@ -116,7 +116,7 @@ rem ---------------------------------------------------------------
 rem  Text strings per language
 rem ---------------------------------------------------------------
 if "%LANG%"=="EN" (
-    set "MSG_TITLE=melcom GOG Galaxy v2.1+ Plugin Updater v0.1.3"
+    set "MSG_TITLE=melcom GOG Galaxy v2.1+ Plugin Updater v0.1.4"
     set "MSG_SCANNING=Scanning installed plugins ..."
     set "MSG_TABLE_HEAD=Folder / Status / Name"
     set "MSG_VALID=OK (melcom)"
@@ -192,6 +192,8 @@ if "%LANG%"=="EN" (
     set "MSG_DOWNLOADING=Downloading and installing update ..."
     set "MSG_UPDATE_OK=Update installed successfully."
     set "MSG_UPDATE_FAIL=Update FAILED. Your backup is still available in the backups folder."
+    set "MSG_GALAXY_RUNNING=GOG Galaxy is still running. Close it completely, including the system tray, and run the updater again. Active process(es):"
+    set "MSG_GALAXY_CHECK_FAIL=Could not safely determine whether GOG Galaxy is running. No plugin files will be changed:"
     set "MSG_RESTORE_PREFIX=Restore"
     set "MSG_RESTORE_SUFFIX=now?"
     set "MSG_YN_PROMPT=[Y/N]: "
@@ -218,7 +220,7 @@ if "%LANG%"=="EN" (
     set "MSG_OLDBACKUPS_DELETED=old backup file(s) deleted."
     set "MSG_OLDBACKUPS_FAIL=Could not delete old backups:"
 ) else (
-    set "MSG_TITLE=melcom GOG Galaxy v2.1+ Plugin Updater v0.1.3"
+    set "MSG_TITLE=melcom GOG Galaxy v2.1+ Plugin Updater v0.1.4"
     set "MSG_SCANNING=Installierte Plugins werden gescannt ..."
     set "MSG_TABLE_HEAD=Ordner / Status / Name"
     set "MSG_VALID=OK (melcom)"
@@ -294,6 +296,8 @@ if "%LANG%"=="EN" (
     set "MSG_DOWNLOADING=Update wird heruntergeladen und installiert ..."
     set "MSG_UPDATE_OK=Update erfolgreich installiert."
     set "MSG_UPDATE_FAIL=Update FEHLGESCHLAGEN. Die Sicherung liegt weiterhin im backups-Ordner."
+    set "MSG_GALAXY_RUNNING=GOG Galaxy laeuft noch. Beende den Client vollstaendig, einschliesslich des System-Trays, und starte den Updater erneut. Aktive(r) Prozess(e):"
+    set "MSG_GALAXY_CHECK_FAIL=Es konnte nicht sicher festgestellt werden, ob GOG Galaxy noch laeuft. Es werden keine Plugin-Dateien geaendert:"
     set "MSG_RESTORE_PREFIX=Spiele"
     set "MSG_RESTORE_SUFFIX=jetzt zurueck?"
     set "MSG_YN_PROMPT=[J/N]: "
@@ -693,6 +697,8 @@ call :SAY "%C_GREEN%" "  %MSG_SAN_KEPT%"
 goto :eof
 
 :SAN_STRIP
+call :EnsureGalaxyStopped
+if "!GALAXY_STOPPED!"=="0" goto :eof
 set "SANRESULT="
 for /f "usebackq delims=" %%R in (`%PWSH_EXE% -NoProfile -ExecutionPolicy Bypass -File "%PS1%" -Action StripSanBlocks -PluginsDir "%PLUGINS_DIR%" -PluginDirName "!SAN_DN!"`) do set "SANRESULT=%%R"
 for /f "tokens=1,2 delims=|" %%a in ("!SANRESULT!") do (set "SAN_STATUS=%%a" & set "SAN_PATH=%%b")
@@ -704,6 +710,8 @@ if "!SAN_STATUS!"=="OK" (
 goto :eof
 
 :SAN_INSERT
+call :EnsureGalaxyStopped
+if "!GALAXY_STOPPED!"=="0" goto :eof
 set "SANRESULT="
 for /f "usebackq delims=" %%R in (`%PWSH_EXE% -NoProfile -ExecutionPolicy Bypass -File "%PS1%" -Action InsertSanBlocks -PluginsDir "%PLUGINS_DIR%" -PluginDirName "!SAN_DN!"`) do set "SANRESULT=%%R"
 for /f "tokens=1,2 delims=|" %%a in ("!SANRESULT!") do (set "SAN_STATUS=%%a" & set "SAN_PATH=%%b")
@@ -902,6 +910,11 @@ if exist "%PLUGINS_DIR%\!DN!" (
     endlocal & goto :eof
 )
 
+call :EnsureGalaxyStopped
+if "!GALAXY_STOPPED!"=="0" (
+    endlocal & set /a INSTALL_FAILURE_COUNT+=1 & goto :eof
+)
+
 call :SAY "%C_CYAN%" "  %MSG_INSTALLING%"
 set "RESULT="
 for /f "usebackq delims=" %%R in (`%PWSH_EXE% -NoProfile -ExecutionPolicy Bypass -File "%PS1%" -Action CheckUpdate -Repo "!RP!" -LatestApi "!API!" -AssetPattern "!PAT!" -LocalVersion "0"`) do set "RESULT=%%R"
@@ -917,7 +930,7 @@ if "!U_STATUS!"=="ERROR" (
 )
 
 set "IRESULT="
-for /f "usebackq delims=" %%R in (`%PWSH_EXE% -NoProfile -ExecutionPolicy Bypass -File "%PS1%" -Action DoUpdate -PluginsDir "%PLUGINS_DIR%" -PluginDirName "!DN!" -DownloadUrl "!U_URL!"`) do set "IRESULT=%%R"
+for /f "usebackq delims=" %%R in (`%PWSH_EXE% -NoProfile -ExecutionPolicy Bypass -File "%PS1%" -Action DoUpdate -PluginsDir "%PLUGINS_DIR%" -PluginDirName "!DN!" -DownloadUrl "!U_URL!" -ExpectedRepo "!RP!" -ExpectedVersion "!U_TAG!"`) do set "IRESULT=%%R"
 for /f "tokens=1,2 delims=|" %%a in ("!IRESULT!") do (set "I_STATUS=%%a" & set "I_PATH=%%b")
 
 if not "!I_STATUS!"=="OK" (
@@ -976,6 +989,11 @@ if "!U_STATUS!"=="AHEAD" (
 )
 
 call :SAY "%C_YELLOW%" "  %MSG_UPDATE_FOUND% !U_TAG!"
+
+call :EnsureGalaxyStopped
+if "!GALAXY_STOPPED!"=="0" (
+    endlocal & set /a CNT_FAILED+=1 & goto :eof
+)
 
 set "SAN_OLDSTATE=NOTPRESENT"
 if /i "!DN!"=="%STEAM_PLUGIN_DIR%" (
@@ -1038,11 +1056,11 @@ if defined SECRET_TYPE (
 rem --- Download and install the update ---
 call :SAY "%C_CYAN%" "  %MSG_DOWNLOADING%"
 set "URESULT="
-for /f "usebackq delims=" %%R in (`%PWSH_EXE% -NoProfile -ExecutionPolicy Bypass -File "%PS1%" -Action DoUpdate -PluginsDir "%PLUGINS_DIR%" -PluginDirName "!DN!" -DownloadUrl "!U_URL!"`) do set "URESULT=%%R"
+for /f "usebackq delims=" %%R in (`%PWSH_EXE% -NoProfile -ExecutionPolicy Bypass -File "%PS1%" -Action DoUpdate -PluginsDir "%PLUGINS_DIR%" -PluginDirName "!DN!" -DownloadUrl "!U_URL!" -ExpectedRepo "!RP!" -ExpectedVersion "!U_TAG!"`) do set "URESULT=%%R"
 for /f "tokens=1,2 delims=|" %%a in ("!URESULT!") do (set "UP_STATUS=%%a" & set "UP_PATH=%%b")
 
 if not "!UP_STATUS!"=="OK" (
-    call :SAY "%C_RED%" "  %MSG_UPDATE_FAIL%"
+    call :SAY "%C_RED%" "  %MSG_UPDATE_FAIL% !UP_PATH!"
     endlocal & set /a CNT_FAILED+=1 & goto :eof
 )
 call :SAY "%C_GREEN%" "  %MSG_UPDATE_OK%"
@@ -1052,11 +1070,16 @@ rem --- Restore the secret file if requested ---
 if defined SECRET_BACKUP_PATH (
     call :AskYesNo DRAW_RESTORE_PROMPT
     if /i "!ASKYN_RESULT!"=="Y" (
-        set "RRESULT="
-        for /f "usebackq delims=" %%R in (`%PWSH_EXE% -NoProfile -ExecutionPolicy Bypass -File "%PS1%" -Action RestoreSecret -PluginsDir "%PLUGINS_DIR%" -PluginDirName "!DN!" -SecretFile "!SECRET_BACKUP_PATH!" -TargetFile "!SECRET_FILE!"`) do set "RRESULT=%%R"
-        for /f "tokens=1,2 delims=|" %%a in ("!RRESULT!") do (set "R_STATUS=%%a" & set "R_PATH=%%b")
-        if "!R_STATUS!"=="OK" (
-            call :SAY "%C_GREEN%" "    %MSG_RESTORE_OK%"
+        call :EnsureGalaxyStopped
+        if "!GALAXY_STOPPED!"=="1" (
+            set "RRESULT="
+            for /f "usebackq delims=" %%R in (`%PWSH_EXE% -NoProfile -ExecutionPolicy Bypass -File "%PS1%" -Action RestoreSecret -PluginsDir "%PLUGINS_DIR%" -PluginDirName "!DN!" -SecretFile "!SECRET_BACKUP_PATH!" -TargetFile "!SECRET_FILE!"`) do set "RRESULT=%%R"
+            for /f "tokens=1,2 delims=|" %%a in ("!RRESULT!") do (set "R_STATUS=%%a" & set "R_PATH=%%b")
+            if "!R_STATUS!"=="OK" (
+                call :SAY "%C_GREEN%" "    %MSG_RESTORE_OK%"
+            ) else (
+                call :SAY "%C_RED%" "    %MSG_RESTORE_FAIL% !SECRET_BACKUP_PATH!"
+            )
         ) else (
             call :SAY "%C_RED%" "    %MSG_RESTORE_FAIL% !SECRET_BACKUP_PATH!"
         )
@@ -1065,6 +1088,30 @@ if defined SECRET_BACKUP_PATH (
 
 call :SAY "" ""
 endlocal & set /a CNT_UPDATED+=1 & goto :eof
+
+rem ===================================================================
+rem  :EnsureGalaxyStopped
+rem  Blocks every plugin installation or replacement while the interactive
+rem  Galaxy client, tray application, or communication process is still active.
+rem ===================================================================
+:EnsureGalaxyStopped
+set "GALAXY_STOPPED=0"
+set "GALAXY_CHECK_RESULT="
+for /f "usebackq delims=" %%R in (`%PWSH_EXE% -NoProfile -ExecutionPolicy Bypass -File "%PS1%" -Action CheckGalaxyRunning`) do set "GALAXY_CHECK_RESULT=%%R"
+for /f "tokens=1,* delims=|" %%a in ("!GALAXY_CHECK_RESULT!") do (
+    set "GALAXY_CHECK_STATUS=%%a"
+    set "GALAXY_CHECK_DETAIL=%%b"
+)
+if /i "!GALAXY_CHECK_STATUS!"=="STOPPED" (
+    set "GALAXY_STOPPED=1"
+    goto :eof
+)
+if /i "!GALAXY_CHECK_STATUS!"=="RUNNING" (
+    call :SAY "%C_RED%" "  %MSG_GALAXY_RUNNING% !GALAXY_CHECK_DETAIL!"
+    goto :eof
+)
+call :SAY "%C_RED%" "  %MSG_GALAXY_CHECK_FAIL% !GALAXY_CHECK_DETAIL!"
+goto :eof
 
 rem ===================================================================
 :SUMMARY
