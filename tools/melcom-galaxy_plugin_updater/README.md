@@ -1,4 +1,4 @@
-# melcom GOG Galaxy v2.1+ Plugin Updater v0.1.3
+# melcom GOG Galaxy v2.1+ Plugin Updater v0.1.4
 
 A colorized Windows command-line tool that keeps your melcom GOG Galaxy 2.1+ integrations up to date.
 
