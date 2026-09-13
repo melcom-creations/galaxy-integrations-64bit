@@ -4,6 +4,31 @@ All notable changes to this project will be documented in this file.
 
 ---
 
+## Version 0.1.5
+
+### Changed in Version 0.1.5
+
+- **External Battle.net and itch.io authentication:** Removed the obsolete checks, prompts, separate backups, and restore operations for Battle.net `consts.py` and itch.io `credentials.json`. Current plugin versions keep personal authentication outside their plugin folders, so regular plugin updates leave it untouched.
+- **Full plugin backups remain unchanged:** The updater still creates a complete ZIP backup of every installed plugin before replacing it and still restores the previous plugin folder automatically if final replacement fails.
+- **Documentation updated:** The README now explains the external authentication behavior and the possible one-time guided setup when upgrading from an older plugin release.
+
+---
+
+## Version 0.1.4
+
+### Added in Version 0.1.4
+
+- **IndieGala installation support:** Added the IndieGala integration to the built-in installation catalog, so it can now be installed through the updater as well as updated when already present.
+
+### Changed in Version 0.1.4
+
+- **Galaxy runtime safety check:** Plugin installations and updates are blocked while the interactive GOG Galaxy client, tray application, or communication process is still running. The persistent `GalaxyClientService` Windows service is intentionally not treated as an open client.
+- **Validated release archives:** Before an installed plugin is touched, the updater now verifies the trusted GitHub source and checks the archive's manifest, repository, project URL, GUID, version, and entry script.
+- **Safer plugin replacement:** Downloaded files are prepared separately before installation. Existing plugin files are moved aside only for the final replacement and are restored automatically if that replacement fails.
+- **Clearer failure details:** Archive validation and installation errors are now included in the updater output and log.
+
+---
+
 ## Version 0.1.3
 
 ### Added in Version 0.1.3

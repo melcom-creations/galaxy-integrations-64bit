@@ -1,4 +1,4 @@
-# melcom GOG Galaxy v2.1+ Plugin Updater v0.1.4
+# melcom GOG Galaxy v2.1+ Plugin Updater v0.1.5
 
 A colorized Windows command-line tool that keeps your melcom GOG Galaxy 2.1+ integrations up to date.
 
@@ -12,9 +12,12 @@ The supported plugins are available at [melcom-creations/galaxy-integrations-64b
 - English and German interface
 - Checks installed supported plugins for available updates
 - Offers available integrations for installation when none are installed
+- Includes IndieGala in the automatic installation catalog
 - Offers to hook up automatic [Steam Achievement Notifier](https://github.com/SteamAchievementNotifier/SteamAchievementNotifier) startup when installing the Steam plugin
 - Creates a ZIP backup before every update
-- Preserves Battle.net and itch.io credentials when needed
+- Refuses to change plugin files while GOG Galaxy is still running
+- Validates downloaded release archives before replacing an installed plugin
+- Leaves externally stored Battle.net and itch.io authentication untouched
 - Colorized output and a log for every run
 - Optional GitHub token support for a higher API limit
 
@@ -24,10 +27,10 @@ The supported plugins are available at [melcom-creations/galaxy-integrations-64b
 
 1. Download and extract the release ZIP to any folder.
 1. Keep `update-plugins.bat` and `update-plugins-helpers.ps1` together in that folder.
+1. Close GOG Galaxy completely, including the system tray application.
 1. Double-click `update-plugins.bat`.
 1. Select English or German, then review the displayed plugins.
 1. Confirm the update when you are ready.
-1. Answer any credential-restoration prompts after an update.
 
 If one or more supported integrations are installed, the updater asks whether you want to install additional ones. If none are installed, it opens the installation list directly. Choose one integration by number, choose `a` to install all missing integrations, or choose `n` to continue to the update check.
 
@@ -47,6 +50,8 @@ Older melcom integrations with incomplete manifest data are marked separately. T
 
 The updater checks your installed supported plugins, skips plugins that are already current, and creates a complete ZIP backup before installing an available update. First-time installations do not overwrite existing plugin folders.
 
+Before changing plugin files, the updater verifies that GOG Galaxy is fully closed. It also validates the downloaded archive's repository, plugin GUID, version, project URL, manifest, and entry script. The new files are prepared separately and swapped into place only after those checks succeed. If the final replacement fails, the previous plugin folder is restored automatically.
+
 Backups and logs are created next to `update-plugins.bat` and `update-plugins-helpers.ps1`, in the `backups` and `logs` folders.
 
 On startup, the tool checks separately whether any logs or any backups are older than 60 days and, if so, asks once per category whether to delete them. Logs and backups are asked about independently, so you can clear one and keep the other. Nothing is deleted without confirmation, and nothing is asked if there is nothing old to delete.
@@ -63,13 +68,13 @@ When installing the Steam plugin for the first time, the updater offers to add a
 
 ---
 
-## 🔐 Battle.net and itch.io Credentials
+## 🔐 External Battle.net and itch.io Authentication
 
-The Battle.net plugin can use personal credentials in `consts.py`, while the itch.io plugin can use a personal access token in `credentials.json`.
+Current Battle.net and itch.io plugin versions store personal authentication outside their plugin folders under `%LOCALAPPDATA%\melcom-creations\GOG Galaxy Integrations\`.
 
-When active credentials are found, the updater creates an additional backup before updating and offers to restore the file afterwards. This allows both integrations to keep working without requiring you to enter the credentials again.
+The updater no longer reads, separately backs up, or restores `consts.py` and `credentials.json`. Updating either plugin leaves its external authentication file untouched. The normal complete plugin ZIP backup is still created before every update.
 
-> **Security:** Never upload, post, or send `consts.py` or `credentials.json` to anyone. These files can contain personal authentication data.
+When updating an older plugin release that still stored credentials inside the plugin folder, the guided setup may appear once after the update. Follow the displayed instructions to save the authentication in its new external location.
 
 ---
 
