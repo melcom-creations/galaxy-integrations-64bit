@@ -2,6 +2,8 @@
 
 This repository provides a central overview of community integrations compatible with GOG Galaxy 2.1+ 64-bit. Each integration remains in its own repository and is linked in the table below.
 
+[Integrations](#-64-bit-community-integration-status) | [Installation](#-installation) | [Tools](#-plugin-maintenance-tools) | [Troubleshooting](#-troubleshooting) | [Support & Feedback](#-support--feedback)
+
 ---
 
 ## 🔄 Get the 64-bit GOG Galaxy Client
@@ -34,17 +36,32 @@ These integrations require the native 64-bit version of GOG Galaxy 2.1 or later.
 
 ---
 
-## 📦 How to Install a Plugin
+## 📦 Installation
+
+### 🔄 Automatic Installation with Plugin Updater (Recommended)
+
+Use the [melcom GOG Galaxy Plugin Updater](https://github.com/melcom-creations/galaxy-integrations-64bit/tree/main/tools/melcom-galaxy_plugin_updater) for integrations supported by the tool.
+
+1. Download and extract the Plugin Updater.
+2. Double-click `update-plugins.bat`.
+3. Select your preferred language and follow the displayed instructions.
+
+### 📂 Manual Installation
 
 1. Close GOG Galaxy completely, including the system tray application.
-2. Use the **Download** link in the table and download the latest 64-bit release.
+2. Open the integration's repository using the **Download** link in the table, then download its latest 64-bit package from **Releases**.
 3. Extract the plugin folder into:
 
    ```text
    %localappdata%\GOG.com\Galaxy\plugins\installed
    ```
 
+   `manifest.json` must be directly inside the extracted plugin folder, without an extra nested folder.
 4. Start GOG Galaxy and connect the account through **Settings -> Integrations**.
+
+**Next step:** Follow the integration's README for any required setup and the first synchronization. Battle.net and itch.io require personal authentication setup; other integrations may ask you to configure game folders.
+
+Keep backup copies of plugin folders outside `plugins\installed`. Duplicate folders can cause conflicts when Galaxy loads integrations.
 
 ---
 
@@ -54,7 +71,9 @@ Both maintenance tools are available exclusively from this repository's [`/tools
 
 ### 🔄 melcom GOG Galaxy Plugin Updater
 
-The [melcom GOG Galaxy Plugin Updater](https://github.com/melcom-creations/galaxy-integrations-64bit/tree/main/tools/melcom-galaxy_plugin_updater) is the recommended Windows tool for installing and updating supported integrations. It creates a ZIP backup and log before each update, can preserve Battle.net and itch.io credentials, and offers optional Steam Achievement Notifier startup support. No separate Python installation is required.
+The [melcom GOG Galaxy Plugin Updater](https://github.com/melcom-creations/galaxy-integrations-64bit/tree/main/tools/melcom-galaxy_plugin_updater) is the recommended Windows tool for installing and updating supported integrations. It creates a complete plugin ZIP backup and a log before each update, and offers optional Steam Achievement Notifier startup support. No separate Python installation is required.
+
+Current Battle.net and itch.io plugin versions store personal authentication data outside the plugin folder. Plugin updates do not overwrite these files. See each integration's README for setup and storage details.
 
 ### 🔬 Galaxy Plugin Scout - Advanced Users Only
 
@@ -68,32 +87,34 @@ All integrations listed on this page are intended for GOG Galaxy 2.1+ 64-bit, wh
 
 ---
 
-## 🛠️ What to Do If a Plugin Has Problems
+## 🛠️ Troubleshooting
 
-Before contacting me, create fresh diagnostic files. Old logs may contain information from previous sessions and often do not show the current problem.
+First restart Galaxy and the required store client, then try one synchronization. Check the affected integration's README for known limitations and specific troubleshooting steps.
+
+### 🧪 Create a Fresh Diagnostic Log
+
+Before contacting the maintainer, create a fresh plugin log. Old logs may contain information from previous sessions. A database reset is not required to collect a log.
 
 1. Close GOG Galaxy completely, including the system tray application.
-2. Open the following directory and delete the existing log files:
+2. Open the logs directory:
 
    ```text
    %ProgramData%\GOG.com\Galaxy\logs
    ```
 
-3. Open the plugin storage directory and delete only the `-storage.db` file belonging to the affected integration:
+3. Find the affected integration's log; its README gives the exact filename. Move the existing log to a backup folder outside this directory, if present. Leave other integrations' logs in place.
+4. Start the required store client and Galaxy, reproduce the problem, then close Galaxy completely so the new log is fully written.
+5. Send only the newly created log for the affected integration, not the entire folder.
 
-   ```text
-   C:\ProgramData\GOG.com\Galaxy\storage\plugins
-   ```
-
-   Do not delete database files belonging to other integrations. If you are unsure which file is correct, do not delete anything from this directory.
-4. Start GOG Galaxy, reproduce the problem, and close the client completely again so the new log is fully written.
-5. Return to the logs directory and send only the newly created log belonging to the affected integration, not the entire folder.
-
-Include the affected integration, the exact steps taken, the expected and actual result, and whether the problem can be reproduced.
+Include the affected integration, plugin and Galaxy versions, the exact steps taken, the expected and actual result, and whether the problem can be reproduced.
 
 Without a fresh plugin log and a detailed description, I cannot reliably determine what is causing the problem.
 
-Once everything is ready, continue with [Support & Feedback](#-support--feedback) for contact options.
+### 🔄 Reset Plugin Storage (Last Resort)
+
+If a reset is necessary, follow the affected integration's README and preserve its database as a backup. A reset can affect cached library data, locally tracked playtime, or the login session. Do not delete databases belonging to other integrations.
+
+For integrations maintained by **melcom**, continue with [Support & Feedback](#-support--feedback). For other integrations, contact the maintainer listed in the table.
 
 ---
 
@@ -115,7 +136,7 @@ Thank you both for having my back!
 
 **GitHub Issues are intentionally disabled.** Health-related limitations prevent me from reliably managing separate issue trackers across all of my plugin repositories.
 
-Before contacting me about an integration maintained by **melcom**, follow **What to Do If a Plugin Has Problems** and prepare a fresh plugin log with a detailed description.
+Before contacting me about an integration maintained by **melcom**, follow [Troubleshooting](#-troubleshooting) and prepare a fresh plugin log with a detailed description.
 
 * **GOG:** Send me a message or add me as a friend through my [GOG profile](https://www.gog.com/u/melcom).
 * **Email:** `melcom @ gmx.net`
