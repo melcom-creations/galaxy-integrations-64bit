@@ -2,7 +2,9 @@
 
 This repository provides a central overview of community integrations compatible with GOG Galaxy 2.1+ 64-bit. Each integration remains in its own repository and is linked in the table below.
 
-The integrations I maintain are free and will remain free. If you'd like to support my work, you're welcome to [☕ buy me a coffee through PayPal](https://paypal.me/melcom2630). Support is entirely optional and always appreciated.
+> **☕ Optional support**
+>
+> The integrations I maintain are free and will remain free. If you'd like to support my work, you're welcome to [☕ buy me a coffee through PayPal](https://paypal.me/melcom2630). Support is entirely optional and always appreciated.
 
 [Integrations](#-64-bit-community-integration-status) | [Installation](#-installation) | [Tools](#-plugin-maintenance-tools) | [Troubleshooting](#-troubleshooting) | [Support & Feedback](#-support--feedback)
 
