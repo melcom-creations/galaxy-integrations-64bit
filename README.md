@@ -2,6 +2,8 @@
 
 This repository provides a central overview of community integrations compatible with GOG Galaxy 2.1+ 64-bit. Each integration remains in its own repository and is linked in the table below.
 
+The integrations I maintain are free and will remain free. If you'd like to support my work, you're welcome to [☕ buy me a coffee through PayPal](https://paypal.me/melcom2630). Support is entirely optional and always appreciated.
+
 [Integrations](#-64-bit-community-integration-status) | [Installation](#-installation) | [Tools](#-plugin-maintenance-tools) | [Troubleshooting](#-troubleshooting) | [Support & Feedback](#-support--feedback)
 
 ---
@@ -145,11 +147,3 @@ Before contacting me about an integration maintained by **melcom**, follow [Trou
 Logs can be attached directly or shared using an accessible cloud storage link, such as Dropbox, OneDrive, Google Drive, or a similar service.
 
 Response times may vary depending on my health and available development time. Thank you for your understanding.
-
----
-
-## ☕ Support my work
-
-The integrations I maintain are free and will remain free. If you find them useful, you're welcome to buy me a coffee. Support is entirely optional and always appreciated.
-
-[☕ Buy me a coffee (PayPal)](https://paypal.me/melcom2630)
